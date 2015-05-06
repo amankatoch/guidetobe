@@ -1,0 +1,63 @@
+%nav.breadcrumbs
+  = link_to 'Brides', admin_brides_path
+  = link_to 'Bride', admin_bride_path(@bride), class: 'current'
+
+.row.bride_container
+  .columns.large-4
+    %ul.vcard.bride_vcard
+      %li.fn= @bride.name
+      %li.street-address= @bride.address
+      %li.locality= @bride.region
+      %li.email
+        = mail_to @bride.email
+
+    - if @bride.has_avatar?
+      = link_to '#', class: 'th' do
+        = filepicker_image_tag @bride.avatar, w: 208, h: 208, fit: 'clip'
+    - else
+      = link_to '#', class: 'th' do
+        = image_tag 'http://placekitten.com/208/208'
+
+  .columns.large-8
+    %h1= @bride.name
+    %hr
+    .button-group
+      %li= link_to 'Edit', edit_admin_bride_path(@bride), class: 'small button'
+      %li= link_to 'Remove', admin_bride_path(@bride), class: 'small alert button', method: :delete, data: { confirm: 'Are you sure?' }
+
+    %p= "Registered on #{@bride.created_at.to_s(:long)}"
+    - if @bride.has_logged_in?
+      %p= "Last logged in on #{@bride.last_login.to_s(:long)}"
+    %p
+      Source of bride:
+      = @bride.source
+      - if @bride.source == 'Other'
+        %p
+          Other source:
+          = @bride.source_other
+
+    .panel.callout.radius
+      %h5 Wedding info will be here if user has entered it:
+      %p
+        Wedding is on:
+        - if @bride.wedding_date
+          %strong= @bride.wedding_date.to_s(:long)
+        - else
+          Blank
+      %p
+        Place of wedding is:
+        - if @bride.wedding_place.empty?
+          Blank
+        - else
+          %strong= @bride.wedding_place
+          
+
+
+    %h3.bride_reviews Reviews
+    %hr
+
+    - if @reviews.count > 0
+      - @reviews.each do |review|
+        = render 'reviews/review', review: review
+    - else
+      %p No reviews written yet

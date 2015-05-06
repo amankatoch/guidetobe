@@ -1,0 +1,25 @@
+.row
+  .columns.large-12
+    %h1 City Requests
+
+.row
+  .columns.large-12
+    - if @city_requests.count > 0
+      %table.city_requests_table
+        %thead
+          %tr
+            %th ID
+            %th Created at
+            %th Region name
+            %th Requester email
+            %th Requester wedding date
+        %tbody
+          - @city_requests.each do |request|
+            %tr
+              %td= request.id
+              %td= request.created_at
+              %td= request.region
+              %td= mail_to request.email
+              %td= request.wedding_date
+    - else
+      %p No city requests yet

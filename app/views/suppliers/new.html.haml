@@ -1,0 +1,50 @@
+
+.add_supplier_text#supplier_name_finder
+  %h1 Share your review
+
+  %p Please tell us the name of the business you'd like to review. 
+  %p Enter the name in the box below and select from the drop down or hit enter to carry on. 
+  .form_field_wrapper{style: 'padding-bottom: 0px;'}
+    %input{type: 'text', name: 'supplier_name', class: 'gtb_text_field supplier_autocomplete_field', id: 'supplier_autocomplete'}
+  .supplier_autocomplete_error{style: 'display: none; color: #E62B8A;'}
+    Please make sure you fill in the name of the supplier before proceeding
+
+  = link_to 'Share your review', new_supplier_review_path(supplier_id: 2), class: 'standard_green_button autocomplete_field_button', style: 'display: none; margin-top: 20px;', id: 'proceed_to_review'
+
+.add_supplier_wrapper{style: 'display: none;'}
+  .add_supplier_text
+    .add_supplier_error{style: 'display: none;'}
+      %p#flash_alert{style: "/* color: red; */width: 900px; color: #ff74b2;text-align: center;margin-top: -20px; margin-bottom: 10px; clear: both; font-size: 19px;"} Please review your form. Parts marked * must be filled in.
+    %h1
+      Add a new business
+    %p The business you want to review is not yet listed on Guide To Be. Please fill in a few details below to get started on your review.
+
+    %p{style: 'margin-top: 20px;'}
+      Boxes marked
+      %span.green_required{style: 'color: green;'} *
+      must be filled in
+
+  .add_supplier_form
+    = simple_form_for @supplier do |f|
+      .form_field_wrapper
+        = f.input :name, input_html: {class: 'gtb_text_field', data: {validetta: "required"} }, label: 'Business Name'
+      .form_field_wrapper
+        = f.association :category, label_html: { class: 'category_label_sup_form' }
+      .form_field_wrapper
+        = f.association :region, label_html: { class: 'city_label_sup_form '}
+      .form_field_wrapper
+        %p{style: 'padding: 20px 0;'} Please fill in at least the email address and website:
+      .form_field_wrapper
+        = f.input :email, label: 'Email address', input_html: { class: 'gtb_text_field', data: {validetta: "email"} }
+      .form_field_wrapper
+        = f.input :phone, label: 'Phone',  input_html: { class: 'gtb_text_field' }
+      .form_field_wrapper
+        = f.input :website, label: 'Website', input_html: { class: 'gtb_text_field' }
+      .form_field_wrapper
+        = f.button :submit, 'Add Supplier', class: 'standard_green_button add_supplier_button'
+
+%script
+  $("#supplier_category_id").kendoDropDownList();
+  $("#supplier_region_id").kendoDropDownList();
+
+

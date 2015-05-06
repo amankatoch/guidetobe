@@ -1,0 +1,26 @@
+<div class="pay_invoice_container">
+  <% if @error %>
+    <%= @error %>
+  <% end %>
+
+  <h1>Pay your invoice</h1>
+
+  <p>The outstanding amount for this invoice is <%= formatted_price(@invoice.amount) %></p>
+
+  <p>Once the payment has been completed then your advertisement will be activated.</p>
+
+  <%= form_tag invoice_path(@invoice), method: :put do %>
+    <script src="https://checkout.stripe.com/v2/checkout.js"
+            class="stripe-button"
+            data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
+            data-description="<%= @invoice.reference %>"
+            data-amount="<%= (@invoice.amount * 100).to_i %>"
+            data-currency='GBP'>
+     </script>
+  <% end %>
+
+  <p>We use Stripe to process all our payments</p>
+
+
+
+</div>

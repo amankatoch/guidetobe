@@ -1,0 +1,17 @@
+%nav.breadcrumbs
+  = link_to 'Products', admin_products_path, class: 'current'
+
+%h1 Business Products
+%hr
+
+%table.products_table
+  %thead
+    %tr
+      %th Name
+      %th Subscribers
+      %th
+      %th
+  %tbody
+    = render @products
+
+

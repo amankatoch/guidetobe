@@ -1,0 +1,13 @@
+- content_for :head, auto_discovery_link_tag(:atom, posts_url(format: "atom"))
+
+.preview_posts_wrapper
+  .blog_posts_left_column
+    %h1{style: 'font-size: 20px; color: #6a6a6a;'} Guide To Be's blog
+    .rss_icon
+      = link_to image_tag('feed-icon-28x28.png'), posts_url(format: 'atom')
+    = render @posts
+  .blog_posts_right_column
+    %h3{style: 'font-size: 16px; color: #6a6a6a;'} Tag Cloud
+    .tag_cloud_wrapper
+      - tag_cloud Post.tag_counts, %w[s m l] do |tag, css_class|
+        = link_to tag.name, tag_path(tag.name), class: css_class

@@ -1,0 +1,95 @@
+= filepicker_js_include_tag
+
+
+.write_review_title_wrapper
+  %h1 Share your review
+  - if @supplier
+    %p.review_helper 
+      %strong You are writing a review for #{link_to @supplier.name, @supplier}.
+    %p.review_helper You can write a review for a different business #{link_to 'here', new_supplier_path}
+  %p{style: 'margin-top: 20px;'}
+    Boxes marked
+    %span.green_required *
+    must be filled in
+
+.new_review_form
+  = simple_form_for @review do |f|
+    - if @supplier
+      = f.hidden_field :supplier_id, value: @supplier.id
+    .form_field_wrapper
+      = f.input :general_content, label: 'My review', input_html: {class: 'gtb_text_area animated'}
+      .char_count_wrapper
+        You have
+        %span#charsLeft
+        characters left. Please use a minimum of 50 characters.
+    .form_field_wrapper
+      = f.input :like_content, label: 'One thing I loved', input_html: {class: 'gtb_text_field'}
+    .form_field_wrapper
+      = f.input :unlike_content, label: "Any tips?", input_html: { class: 'gtb_text_field' }
+
+    #service_rating.diamond_rating_wrapper
+      = f.label :service, "<span class='green_required'>*</span>Service rating".html_safe, class: 'diamond_rating_title'
+      .diamond_inner_rating_wrapper
+        %a.diamond_rating_one{href: "javascript:;"}
+        %a.diamond_rating_two{href: "javascript:;"}
+        %a.diamond_rating_three{href: "javascript:;"}
+        %a.diamond_rating_four{href: "javascript:;"}
+        %a.diamond_rating_five{href: "javascript:;"}
+        .rating_text_field
+          = f.input :service, id: 'rating_value', class: 'service_rating_text_field', label: false, required: false
+
+
+    #price_rating.diamond_rating_wrapper
+      = f.label :price, "<span class='green_required'>*</span>Value rating".html_safe, class: 'diamond_rating_title'
+      .diamond_inner_rating_wrapper
+        %a.diamond_rating_one{href: "javascript:;"}
+        %a.diamond_rating_two{href: "javascript:;"}
+        %a.diamond_rating_three{href: "javascript:;"}
+        %a.diamond_rating_four{href: "javascript:;"}
+        %a.diamond_rating_five{href: "javascript:;"}
+        .rating_text_field
+          = f.input :price, id: 'rating_value', class: 'price_rating_text_field', label: false, required: false
+
+    #overall_rating.diamond_rating_wrapper
+      = f.label :overall, "<span class='green_required'>*</span>Overall rating".html_safe, class: 'diamond_rating_title'
+      .diamond_inner_rating_wrapper{style: 'margin-bottom: 30px;'}
+        %a.diamond_rating_one{href: "javascript:;"}
+        %a.diamond_rating_two{href: "javascript:;"}
+        %a.diamond_rating_three{href: "javascript:;"}
+        %a.diamond_rating_four{href: "javascript:;"}
+        %a.diamond_rating_five{href: "javascript:;"}
+        .rating_text_field
+          = f.input :overall, id: 'rating_value', class: 'overall_rating_text_field', label: false, required: false
+
+    %h3{style: 'color: #6a6a6a'} Images
+    %p.upload_instructions Upload some pictures from your experience with this supplier
+    .field.image_field
+      .upload-image-contaner-empty.one
+        .logo_block#one
+      = f.filepicker_field :image_one_url, onchange: 'onPhotoOneUpload(event)', button_class: 'upload_button image_one_button',
+                                                       button_text: 'Add image', max_size: '819200'
+    .field.image_field
+      .upload-image-contaner-empty.two
+        .logo_block#two
+      = f.filepicker_field :image_two_url, onchange: 'onPhotoTwoUpload(event)', button_class: 'upload_button image_two_button',
+                                                       button_text: 'Add image', max_size: '819200'
+
+    .field.image_field
+      .upload-image-contaner-empty.three
+        .logo_block#three
+      = f.filepicker_field :image_three_url, onchange: 'onPhotoThreeUpload(event)', button_class: 'upload_button image_three_button',
+                                                       button_text: 'Add image', max_size: '819200'
+
+    .agree_to_terms_review_form.reviews_form_label_spacing
+      = f.input :terms, as: :boolean, boolean_style: :inline, label: "Agree to #{link_to 'terms and conditions', terms_path, style: 'color: #E62B8A;', target: '_blank'}".html_safe, required: true
+
+    .actions
+      = f.button :submit, 'Submit review', class: 'write_review_button visible-all'
+
+%script
+  /  add counts to general content
+  $('#review_general_content').limit('350', '#charsLeft')
+  / add count to like content
+  $('#review_like_content').limit('140', '#likeCharsLeft')
+  / add count to unlike content
+  $('#review_unlike_content').limit('140', '#unlikeCharsLeft')

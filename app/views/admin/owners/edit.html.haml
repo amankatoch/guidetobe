@@ -1,0 +1,27 @@
+%nav.breadcrumbs
+  = link_to 'Owners', admin_owners_path
+  = link_to 'Owner', admin_owner_path(@owner)
+  = link_to 'Edit', '#', class: 'current'
+
+.row
+  .columns.large-12
+    %h1 Edit Owner
+    %hr
+
+    = simple_form_for [:admin, @owner] do |f|
+
+      %h4 Basic Info
+      = f.input :first_name
+      = f.input :last_name
+      = f.input :username
+      = f.input :email
+      = f.input :password
+      = f.input :password_confirmation
+      = f.input :source, as: :select, collection: HOW_HEAR
+      = f.input :source_other
+
+      %h3 Supplier and Product
+      = f.association :supplier
+      = f.association :product
+
+      = f.submit 'Update', class: 'button'

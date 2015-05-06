@@ -1,0 +1,16 @@
+= form_for @resource, :url => password_reset_path(params[:id]) do |f|
+  - if @resource.errors.any?
+    .error_messages
+      %h2 Form is invalid
+      %ul
+        - for message in @resource.errors.full_messages
+          %li= message
+  %div.pw_reset_form_wrapper
+    .field
+      = f.label :password, class: 'pw_reset_field'
+      = f.password_field :password, class: 'gtb_text_field'
+    .field
+      = f.label :password_confirmation, class: 'pw_reset_field'
+      = f.password_field :password_confirmation, class: 'gtb_text_field'
+    .actions
+      = f.submit 'Update Password', class: 'signup_button'

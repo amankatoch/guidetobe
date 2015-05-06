@@ -1,0 +1,52 @@
+%nav.breadcrumbs
+  = link_to 'Advertisements', admin_advertisements_path
+  = link_to 'Advertisement', admin_advertisement_path(@ad), class: 'current'
+
+
+%h1 Advertisement
+= link_to 'Edit', edit_admin_advertisement_path(@ad), class: 'small button'
+= link_to 'Create invoice', new_admin_advertisement_invoice_path(@ad), class: 'small success button'
+%hr
+
+.row
+  .columns.large-6
+    %h3 Basic Info
+    %p Category: #{@ad.category.name}
+    %p Region: #{@ad.region.name}
+    %p Start Date: #{@ad.start_date}
+    %p End Date: #{@ad.end_date}
+    %p Active: #{@ad.active}
+
+    %h3 Contact Details
+    %p Name: #{@ad.contact_name}
+    %p Email: #{mail_to @ad.contact_email}
+  .columns.large-6
+    = filepicker_image_tag @ad.image_url
+
+.row
+  .columns.large-12
+    %h2 Invoices
+    %hr
+
+    - if @invoices.count > 0
+      %table.invoices_table
+        %thead
+          %tr
+            %th Created at
+            %th Invoice Date
+            %th Invoice Email
+            %th Amount
+            %th Paid
+            %th Stripe Link
+        %tbody
+          - @invoices.each do |invoice|
+            %tr
+              %td= invoice.created_at
+              %td= invoice.date
+              %td= invoice.email
+              %td= invoice.amount
+              %td= invoice.paid
+              - if invoice.stripe_token?
+                %td= link_to 'View', "https://manage.stripe.com/payments/#{invoice.stripe_token}"
+    - else
+      %p No invoices created yet for this advertisement

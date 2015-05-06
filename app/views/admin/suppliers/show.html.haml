@@ -1,0 +1,65 @@
+.row
+  .large-12.columns
+    %nav.breadcrumbs
+      = link_to 'Suppliers', admin_suppliers_path
+      = link_to 'Supplier', admin_supplier_path(@supplier), class: 'current'
+
+.row
+  .large-12.columns
+    %h1= @supplier.name
+    .button-group
+      = link_to 'Edit', edit_admin_supplier_path(@supplier), class: 'tiny radius button'
+      - if @supplier.owned?
+        =link_to 'View owner', admin_owner_path(@supplier.owner), class: 'tiny radius success button'
+    %hr
+
+    %h5 Supplier Info
+
+    %p Name: #{@supplier.name}
+    %p Category: #{@supplier.category_name}
+    %p Region: #{@supplier.region_name}
+    %p Description
+    %p= @supplier.description
+
+    %hr
+
+    %h5 Contact Info
+
+    %p Email: #{mail_to @supplier.email}
+    %p Phone: #{@supplier.phone}
+    - if @supplier.website?
+      %p Website: #{link_to @supplier.website, target: '_blank'}
+    %p Facebook: #{@supplier.facebook_url}
+    %p Twitter: #{@supplier.twitter_url}
+    %p Google: #{@supplier.google_url}
+
+    %hr
+
+    %h5 Logo
+
+    - if @supplier.logo_url?
+      = filepicker_image_tag @supplier.logo_url, w: 150, h: 150, fit: 'crop'
+
+    %hr
+
+    %h5 Images
+
+    - if @supplier.has_images?
+      = render 'suppliers/supplier_images'
+    - else
+      %p No images uploaded yet for this supplier
+
+    %hr
+
+    %h5 Video
+
+    - if @supplier.video_url?
+      %iframe{:allowfullscreen => '', :frameborder => '0', :height => '315', :src => "//www.youtube.com/embed/#{@supplier.youtube_code}", :width => '420'}
+    - else
+      %p No video added for this supplier
+
+
+
+
+
+

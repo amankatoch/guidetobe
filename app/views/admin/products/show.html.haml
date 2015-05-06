@@ -1,0 +1,58 @@
+%nav.breadcrumbs
+  = link_to 'Products', admin_products_path
+  = link_to @product.name, admin_product_path(@product), class: 'current'
+
+%h2= @product.name
+= link_to 'Edit', edit_admin_product_path(@product), class: 'tiny button'
+
+%h3 Business Product
+%hr
+
+%p
+  %span.label.success= "£#{@product.year_price}"
+  per year
+
+- if @product.free?
+  - if @product.owners.empty?
+    %p No subscribers yet
+  - else
+    %table.subscriptions_table
+      %thead
+        %th Name
+        %th Date registered
+        %th Supplier
+        %th
+      %tbody
+        - @product.owners.each do |owner|
+          %tr
+            %td= owner.name
+            %td= owner.created_at
+            %td= link_to owner.supplier.name, admin_suppliers_path(owner.supplier)
+            %td= link_to 'View details', admin_owner_path(owner)
+
+- else
+  %h3 Subscriptions
+  %hr
+  - if @product.subscriptions.empty?
+    %p No subscribers to this package yet
+  - else
+    %table.subscriptions_table
+      %thead
+        %tr
+          %th Name
+          %th Type
+          %th Date of subscription
+          %th Start Date
+          %th End Date
+          %th Active
+          %th
+      %tbody
+        - @product.subscriptions.each do |sub|
+          %tr
+            %td= link_to sub.owner.name, admin_owner_path(sub.owner)
+            %td= sub.type
+            %td= sub.created_at
+            %td= sub.start_date
+            %td= sub.end_date
+            %td= sub.in_date?
+            %th= link_to 'View details', admin_owner_path(sub.owner)

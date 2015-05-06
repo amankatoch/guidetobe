@@ -1,0 +1,34 @@
+.inner_page_text_based{ :style => "padding-top: 20px;" }
+  %h5.edit_supplier_header{ :style => "margin-bottom: 0;"}
+    - if @upgrading
+      You are currently upgrading to a
+      - if @product
+        %span{class: "#{@product.name}"}= @product.name
+      - else
+        %span#package_name
+      listing
+    - else
+      You currently have a
+      - if @product
+        %span{class: "#{@product.name}"}= @product.name
+      - else
+        %span#package_name
+      listing
+
+
+  %p Please select one of the following packages to upgrade
+
+
+  = simple_form_for @owner do |f|
+    = f.association :product, collection: Product.upgrade_options_for_owner(@owner), prompt: 'Choose a package'
+    %p
+      = link_to 'What are my options?', '#', id: 'package_reveal_link_upgrade', class: 'edit_owners_options_link_placement'
+
+    -#- if @owner.paid_owner?
+    -#  %p I've changed my mind! Please #{link_to 'keep me on my current package', owner_downgrade_path(@owner) }
+
+    %p I've changed my mind! Please #{link_to 'keep me on my current package', owner_downgrade_path(current_owner)}
+
+    = f.button :submit, 'Upgrade my listing', class: 'signup_button business_listing_button edit_owners_page_briefcase_icon'
+
+= render 'package_model'

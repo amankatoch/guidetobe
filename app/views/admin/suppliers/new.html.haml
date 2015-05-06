@@ -1,0 +1,12 @@
+= filepicker_js_include_tag
+
+.nav.breadcrumbs
+  = link_to 'Suppliers', admin_suppliers_path
+  = link_to 'New Supplier', new_admin_supplier_path, class: 'current'
+
+.row
+  .columns.large-12
+    %h1 Add a new Supplier
+    %hr
+
+= render :partial => 'form'

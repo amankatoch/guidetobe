@@ -1,0 +1,73 @@
+.home_links.mobil-setting.m-top-10.visible-xs
+  - if current_owner
+    - if current_owner.product.name=="Golden"
+      = link_to 'Edit my listing', edit_supplier_path(current_owner.supplier), class: 'edit_my_listing_button pink_button_update'
+    - else
+      = link_to 'Edit my listing', edit_supplier_path(current_owner.supplier), class: 'edit_my_listing_button pink_button_update'
+      = link_to 'Upgrade my listing', edit_owner_path(current_owner), class: 'write_review_button user_upgrade_button'
+  - elsif current_bride
+    = link_to 'Share your review', new_supplier_review_path(@supplier), class: 'write_review_button'
+  - else
+    -#= link_to 'FREE business listing', business_listings_path, class: 'claim_business_button'
+    = link_to 'Share your review', new_supplier_review_path(@supplier), class: 'write_review_button'
+.left_column{:itemscope => "", :itemtype => "http://schema.org/LocalBusiness"}
+  %p{style:'margin-bottom:40px; font-size:14px;'}= link_to "Click here to see more #{@supplier && @supplier.category && @supplier.category.name} | #{@supplier && @supplier.region && @supplier.region.name}", region_category_path(@supplier.region, @supplier.category)
+
+  .listing_header_spacing{:itemscope=>"", :itemtype=>"http://schema.org/Product"}
+    %span{:itemprop=>"name",:style=>"display:none"}reviews
+    .main_business_icon_wrapper
+      - if @supplier.logo_url?
+        = image_tag @supplier.logo_url, width: '160', height: '160'
+      - else
+        .supplier_placeholder.large{class: "#{@supplier.category.name.downcase}"}
+    .business_info{:itemprop=>"aggregateRating", :itemscope=>"", :itemtype=>"http://schema.org/AggregateRating"}
+      %h1= @supplier.name
+      %p.supplier_listing_info= @supplier.description
+      %p#category_city_supplier_links Category: #{link_to @supplier.category.name, @supplier.category} | Region: #{link_to @supplier.region.name, region_path(@supplier.region)}
+      - if @supplier.email?
+        %p= @supplier.email
+      - if @supplier.phone?
+        %p= @supplier.phone
+
+      - if @supplier.website?
+        - if @supplier.owned?
+          - if @supplier.owner.paid_owner? && @supplier.owner.has_valid_subscription?
+            %p= link_to website_link_text(@supplier.website), @supplier.website, target: '_blank', style: 'color: #E62B8A;'
+          - else
+            %p= website_link_text(@supplier.website)
+        - else
+          %p= website_link_text(@supplier.website)
+
+      %p{:itemprop => "ratingValue", :content => "#{@supplier.rating.to_s}"}= @supplier_decorator.rank_as_text
+      - if @supplier.rating && @supplier.rating > 0
+        .diamond_rating_inline{ class: rating_as_css(@supplier.rating.round)}
+      - else
+        %p No ratings yet
+      %p{:itemprop => "reviewCount", class: "rating-count"}= "#{pluralize(@supplier.review_count, 'review')}"
+      - unless current_owner
+        - unless @supplier.owned?
+          %p{style: 'font-size: 14px; padding-top: 10px;'}= link_to 'Is this your business?', business_claim_listings_path
+
+    - if @supplier.has_images?
+      = render 'supplier_images'
+
+    - if @supplier.has_video?
+      = render 'supplier_video'
+
+  .reviews_wrapper
+    = render @reviews
+
+
+.right_column_wrapper
+  .home_links.city_page.hidden-xs
+    - if current_owner
+      - if current_owner.product.name=="Golden"
+        = link_to 'Edit my listing', edit_supplier_path(current_owner.supplier), class: 'edit_my_listing_button pink_button_update'
+      - else
+        = link_to 'Edit my listing', edit_supplier_path(current_owner.supplier), class: 'edit_my_listing_button pink_button_update'
+        = link_to 'Upgrade my listing', edit_owner_path(current_owner), class: 'write_review_button user_upgrade_button'
+    - elsif current_bride
+      = link_to 'Share your review', new_supplier_review_path(@supplier), class: 'write_review_button'
+    - else
+      -#= link_to 'FREE business listing', business_listings_path, class: 'claim_business_button'
+      = link_to 'Share your review', new_supplier_review_path(@supplier), class: 'write_review_button'

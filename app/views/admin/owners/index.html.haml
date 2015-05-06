@@ -1,0 +1,38 @@
+%nav.breadcrumbs
+  = link_to 'Owners', admin_owners_path, class: 'current'
+
+%h1 Owners
+%p Total number of owners: #{@owners.count}
+%hr
+
+= search_form_for @search, url: admin_owners_path do |f|
+  .row
+    .large-6.columns
+      .row
+        .small-10.columns
+          = f.text_field :email_cont, placeholder: 'Search by email...'
+        .small-2.columns
+          = f.submit 'Search', class: 'button postfix success round'
+  = link_to 'View all', admin_owners_path
+
+%hr
+
+= link_to 'Add a new owner', new_admin_owner_path, class: 'small button'
+
+.row
+  .columns.large-12
+    %table.owners_table
+      %thead
+        %tr
+          %th= sort_link(@search, :created_at, 'Signed up date')
+          %th{ width: 100 }= sort_link(@search, :first_name, 'First name')
+          %th{ width: 100 }= sort_link(@search, :last_name, 'Last name')
+          %th{ width: 100 } Supplier
+          %th{ width: 100 } Business Listing
+          %th Last logged in
+          %th Number of Reviews
+          %th
+          %th
+          %th
+
+      = render @owners

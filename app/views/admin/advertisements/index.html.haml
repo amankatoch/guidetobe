@@ -1,0 +1,39 @@
+%nav.breadcrumbs
+  = link_to 'Advertisements', admin_advertisements_path, class: 'current'
+
+.row
+  .large-12.columns
+    %h1 Advertisements
+    %hr
+
+= link_to 'New Advertisement', new_admin_advertisement_path, class: 'small button'
+
+- if @ads.count > 0
+  .row
+    .large-12.columns
+      %table.advertisements_table
+        %thead
+          %tr
+            %th ID
+            %th Region
+            %th Category
+            %th Start Date
+            %th End Date
+            %th Active
+            %th
+            %th
+            %th
+        %tbody
+          - @ads.each do |ad|
+            %tr
+              %td= ad.id
+              %td= ad.region.name
+              %td= ad.category.name
+              %td= ad.start_date
+              %td= ad.end_date
+              %td= ad.active
+              %td= link_to 'Show', [:admin, ad]
+              %td= link_to 'Edit', edit_admin_advertisement_path(ad)
+              %td= link_to 'Remove', admin_advertisement_path(ad), method: :delete, data: { confirm: 'Are you sure?' }
+- else
+  %p No advertisements created yet

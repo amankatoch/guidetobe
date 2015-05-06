@@ -1,0 +1,72 @@
+= filepicker_js_include_tag
+
+
+
+
+
+.signup_container.edit_user_profile_form
+  %h1
+    Edit your profile
+
+  %p
+    Boxes marked
+    %span.green_required *
+    must be filled in
+
+  .bride_signup_form
+    = simple_form_for @bride do |f|
+      .field
+        = f.input :name, input_html: { class: 'gtb_text_field' }
+
+      .field
+        = f.input :address, input_html: { class: 'gtb_text_field' }
+
+      .field
+        = f.input :region, input_html: { class: 'gtb_text_field' }
+
+      .field
+        = f.input :postcode, input_html: { class: 'gtb_text_field' }
+
+      .field
+        = f.input :email, input_html: { class: 'gtb_text_field' }
+
+      .field
+        = f.input :age, input_html: { class: 'gtb_text_field' }, label: 'Age'
+
+      .field
+        = f.input :wedding_date, as: 'string'
+
+      .field
+        = f.input :wedding_place, input_html: { class: 'gtb_text_field' }, label: 'Place of wedding'
+
+      .field
+        = f.input :username, input_html: { class: 'gtb_text_field' }
+
+      .field
+        = f.input :password, input_html: { class: 'gtb_text_field' }
+
+      .field
+        = f.input :password_confirmation, input_html: { class: 'gtb_text_field' }
+
+      .field
+        - if @bride.has_avatar?
+          = f.label :avatar, 'Your photo',{ class: 'avatar_edit_label' }
+          .current_profile_image_wrapper.edit_img_update
+            = filepicker_image_tag @bride.avatar, w: 208, h: 208, fit: 'clip'
+          = f.filepicker_field :avatar, onchange: 'onPhotoeditUpload(event)', button_class: 'upload_button_bride_avatar edit_user_current_avatar_button',
+                                                       button_text: 'Update your photo', max_size: '819200'
+          .return_plus_icon_wrapper
+          %p#avatar_upload_explanation{style: 'margin-left: 215px;'} Please note that your photo must be square and maximum of 300x300.
+        - else
+          = f.label :avatar, 'Upload a photo',{ class: 'avatar_edit_label' }
+          = f.filepicker_field :avatar, onchange: 'onPhotoUpload(event)', button_class: 'avatar_upload_block', button_text: '', max_size: '819200'
+          .return_plus_icon_wrapper
+          %p#avatar_upload_explanation Please note that your photo must be square and maximum of 300x300.
+
+      .actions
+        = f.submit  'Update my profile', class: 'signup_button'
+
+.right_column_wrapper
+  .home_links.city_page
+    = link_to 'Write a review', new_review_path, class: 'write_review_button'
+

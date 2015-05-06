@@ -1,0 +1,13 @@
+.left_column
+  .city_landing_page_title= region_welcome_message(@region)
+  .city_landing_page_subtitle1= region_cities_message(@region)
+  .city_landing_page_subtitle
+    %br
+    %p
+      Click on an icon below to find the right supplier for you.
+  .city_landing_page_block_wrapper.full_width_block
+    - @categories.each do |category|
+      = link_to category.name, region_category_path(@region, category), class: "city_landing_block #{category.name.downcase}",
+                                                                    style: 'opacity: 1;'
+
+= render :partial => 'right_buttons_and_ads'

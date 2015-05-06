@@ -1,0 +1,10 @@
+= filepicker_js_include_tag
+
+%nav.breadcrumbs
+  = link_to 'Advertisements', admin_advertisements_path
+  = link_to 'New advertisement', new_admin_advertisement_path, class: 'current'
+
+%h1 New Advertisement
+%hr
+
+= render :partial => 'form'

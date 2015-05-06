@@ -1,0 +1,31 @@
+.row
+  .columns.large-12
+    %h1 Advertisement Requests
+
+- if @ad_requests.count > 0
+  .row
+    .columns.large-12
+      %table.ad_requests_table
+        %thead
+          %tr
+            %th ID
+            %td Created at
+            %th Name
+            %th Supplier
+            %th Email
+            %th Phone
+            %th Contact
+            %th Category
+        %tbody
+          - @ad_requests.each do |request|
+            %tr
+              %td= request.id
+              %td= request.created_at
+              %td= request.full_name
+              %td= request.supplier_name
+              %td= request.email
+              %td= request.phone
+              %td= request.contact_preference
+              %td= request.category.name
+- else
+  %p No ad requests yet

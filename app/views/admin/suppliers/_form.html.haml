@@ -1,0 +1,21 @@
+.row
+  .large-12.columns
+    = simple_form_for [:admin, @supplier] do |f|
+      = f.input :name
+      = f.association :category, collection: Category.all.order(:name)
+      = f.association :region, collection: Region.all.order(:name)
+      = f.input :description, hint: 'Maximum 300 characters'
+      = f.input :email
+      = f.input :phone
+      = f.input :website
+      = f.input :address
+      = f.input :facebook_url
+      = f.input :twitter_url
+      = f.input :google_url
+      = f.input :video_url
+      = f.label :logo_url
+      = f.filepicker_field :logo_url
+      %br
+
+      = f.button :submit, class: 'small success button'
+

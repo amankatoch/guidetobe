@@ -1,0 +1,48 @@
+<div class="preview_post_container">
+  <div class="preview_post_header">
+    <h2><%= link_to post.title, post %></h2>
+    <p><%= "Written by #{post.author}" %></p>
+    <p><%= "Published on #{post.published_on.to_s(:long)}" %></p>
+  </div>
+
+
+    <div class="preview_post_content">
+      <%= post.body.html_safe %>
+    </div>
+    <% if post.image.present? %>
+      <%= filepicker_image_tag post.image, w: 208, h: 208, fit: 'clip' %>
+    <% end %>
+
+    <div class="read_more">
+      <%= link_to 'Read more', post  %>
+    </div>
+
+    <div class="tags_wrapper">
+      <ul class="tags">
+        <li><%= raw post.tags.map(&:name).map { |t| link_to t, tag_path(t)}.join(' ')  %></li>
+      </ul>
+    </div>
+
+    <div class="share" id="<%= post.id %>"></div>
+</div>
+
+<script type="text/javascript" charset="utf-8">
+  $(".share#<%= post.id %>").share({
+      facebook: {
+          text: '<%= post.title %>',
+          link: window.location.href,
+          image: '<%= asset_url 'GTB.png' %>'
+      },
+
+      twitter: {
+        text: '<%= post.title %>',
+        link: window.location.href
+      },
+
+      gplus: {
+        link: window.location.href
+      },
+
+      flyout: 'top center'
+  });
+</script>

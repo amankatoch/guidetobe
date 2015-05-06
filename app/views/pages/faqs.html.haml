@@ -1,0 +1,41 @@
+.inner_page_text_based.faq_page
+  .home_links.faq_page_links_wrapper
+    - unless current_owner
+      -#= link_to 'FREE business listing', business_listings_path, class: 'claim_business_button'
+      = link_to 'Share your review', new_supplier_path, class: 'write_review_button'
+
+  %h1
+    FAQs
+
+  %h3 What is Guide To Be?
+  %p
+    Guide To Be is the first independent UK site dedicated to user reviews of wedding suppliers. Real couples share honest reviews, to help others make their dream wedding come true.
+
+  %h3 Why use Guide To Be?
+  %p For those planning a wedding, we are a valuable source of impartial advice on which suppliers will make (or break!) your dream day. For those who are already married, share the love by passing your wisdom on to others.
+
+  %h3 How do I write a review?
+  %p
+    We have made writing a review as easy as possible. Just fill in a few details about yourself, the business you are reviewing and then tell us about your experience. You can get started with a review #{link_to 'here', new_review_path}.
+
+
+  %h3 How many reviews can I write?
+  %p As many as you like – there’s no limit! The more reviews you write, the more our community can grow.
+
+  %h3 What can I do if I suspect a review is fake?
+  %p It is our priority to give Guide To Be-ers an honest and authentic experience. There is a ‘report this review’ button at the bottom of each review to alert us to any suspicious reviews. All reviews reported will be investigated and removed where appropriate.
+
+  %h3 Does a business have control over their reviews?
+  %p No. A business has no control over the reviews it gets. That's up to you. A business can reply to a review but cannot interfere with its content.
+
+  %h3 Why list my business on Guide To Be?
+  %p 
+    We provide a home for all your positive customer feedback – boosting your online profile and exposing your business to a host of new brides-to-be. Think of it as free PR! Create a listing for your business then share your listing with your customers to get reviews. It's easy! 
+
+  %h3 How can I create a business listing?
+  %p 
+    Get started with your business listing #{link_to 'here', business_listings_path}.
+
+  %h3 How can I contact Guide To Be?
+  %p
+    If you have any questions or comments, we'd love to hear from you. You can find our contact details #{link_to 'here', contact_path}.

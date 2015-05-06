@@ -1,0 +1,37 @@
+
+
+.contact_page_wrapper
+  %h1 Contact Us
+  %p= link_to '/guidetobe', 'http://www.facebook.com/guidetobe', target: '_blank', class: 'fb_contact_link'
+  %p= link_to '@guidetobe', 'http://www.twitter.com/guidetobe', target: '_blank', class: 'twitter_contact_link'
+  %br
+  %p 
+  Any questions? Please fill in the form below and we'll get back to you. Or email us at 
+  = mail_to 'hello@guidetobe.co.uk', 'hello@guidetobe.co.uk'
+  
+  
+.signup_container
+  .bride_signup_form{style: 'padding-bottom:0px; margin-bottom: 0px; margin-top:0px;'}
+    = simple_form_for @contact, :html => {:class => 'form-horizontal' } do |f|
+      .field
+        = f.input :name, input_html: { class: 'gtb_text_field' }
+      .field
+        = f.input :email, input_html: { class: 'gtb_text_field' }
+      .field
+        = f.input :type, as: :select, collection: WHY_CONTACT, label: 'How did you hear about us?', allow_blank: false
+      .field
+        = f.input :message, as: :text, label: 'My message' , input_html: {class: 'gtb_text_area animated', style: 'width: 310px;'}
+      .actions
+        = f.submit  'Send message', class: 'signup_button'
+
+
+.inner_page_text_based{style: 'padding-top: 0px;'}
+  %p 
+  For general advertising enquires please contact 
+  = mail_to 'ads@guidetobe.co.uk', 'ads@guidetobe.co.uk'
+  %p 
+  For any media or PR enquiries please contact 
+  = mail_to 'kim@impactonline.co.uk', 'kim@impactonline.co.uk'
+
+
+ 

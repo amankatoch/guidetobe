@@ -1,0 +1,63 @@
+= filepicker_js_include_tag
+
+.signup_container
+  %p{ :style => 'margin-top: 20px;'} If you have already signed up please log in  #{link_to 'here', login_path, style: 'color: #E62B8A'}. To create a business listing click #{link_to 'here', business_listings_path, style: 'color: #E62B8A'}.
+
+  %h1
+    Sign Up Now
+
+  %p Please fill in a few details below to join the Guide To Be community.
+
+  %p{style: 'margin-top: 20px;'}
+    Boxes marked
+    %span.green_required *
+    must be filled in
+
+  .bride_signup_form
+    = simple_form_for @bride do |f|
+      .field
+        = f.input :name, input_html: { class: 'gtb_text_field' }
+
+      .field
+        = f.input :region, input_html: { class: 'gtb_text_field' }
+
+      .field
+        = f.input :email, input_html: { class: 'gtb_text_field' }
+
+      .field
+        = f.input :age, input_html: {:min => "0",  class: 'gtb_text_field' }, label: 'Age'
+
+      .field
+        = f.input :source, as: :select, collection: HOW_HEAR, label: 'How did you hear about us?', allow_blank: false
+
+      .field#other_source_field
+        = f.input :source_other, input_html: { class: 'gtb_text_field' }, label: 'If other please let us know where you heard about us'
+
+      .field
+        = f.input :wedding_date, as: 'string'
+
+      .field
+        = f.input :wedding_place, input_html: { class: 'gtb_text_field' }, label: 'Place of wedding'
+
+      .field
+        = f.input :username, input_html: { class: 'gtb_text_field' }
+
+      .field
+        = f.input :password, input_html: { class: 'gtb_text_field' }
+
+      .field
+        = f.input :password_confirmation, input_html: { class: 'gtb_text_field' }
+
+      .field
+        = f.label :avatar, 'Upload a photo'
+        =# f.filepicker_field :avatar, onchange: 'onPhotoUpload(event)', button_class: 'avatar_upload_block', button_text: '', max_size: '819200'
+        .return_plus_icon_wrapper
+        %p#avatar_upload_explanation Please note that your photo must be square and maximum of 300x300.
+
+      .field
+        = f.input :terms, as: :boolean, boolean_style: :inline, label: "Agree to #{link_to 'terms of use', terms_path, style: 'color: #E62B8A'} and #{link_to 'privacy policy', privacy_path, style: 'color: #E62B8A'}".html_safe, required: true
+      %span{style:'color:#6a6a6a;'} Your wedding date and user name will appear beside your reviews.
+      .actions
+        = f.submit  'Create my profile', class: 'signup_button'
+
+

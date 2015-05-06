@@ -1,0 +1,9 @@
+%tr
+  %td= review.created_at
+  %td= link_to review.bride_name, admin_bride_path(review.bride)
+  %td= link_to review.supplier_name, admin_supplier_path(review.supplier)
+  %td= review.overall
+  %td= review.flaggings.count
+  %td= report_label(review)
+  %td= hidden_label(review)
+  %td= link_to 'Show', admin_review_path(review)

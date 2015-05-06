@@ -1,0 +1,57 @@
+.new_ad_request_container
+  .new_ad_request_container_inner_wrapper
+
+    %h1 Banner advertising
+    %p We’ve made it easy for you to tell more Guide To Be-ers about your business by advertising on our site with click-through banners. You have the choice of the two banner sizes below and a one month or three month package.
+
+    %ol
+      %li{style: 'margin-top: 30px;'}
+        Choose the size of your banner.
+        .sponsor_ad_size_demos
+          = image_tag '275x115.png', class: 'standard_add_space_display_placement'
+          = image_tag '275x235.png'
+      %li Select a payment option. We offer a one month and three month package.
+
+    %p{style: 'margin-top: 30px;'}
+      Please fill in your details below and we will send you a media pack.
+
+    %p{style: 'margin-top: 20px;'}
+    Boxes marked
+    %span.green_required *
+    must be filled in
+
+
+  .ad_request_form
+    = simple_form_for @ad_request do |f|
+      .field
+        = f.input :first_name, label: 'First name', input_html: { class: 'gtb_text_field' }
+      .field
+        = f.input :last_name, label: "Last name", input_html: { class: 'gtb_text_field' }
+      .field
+        = f.input :supplier_name, label: 'Business name', input_html: { class: 'gtb_text_field' }
+      .field
+        = f.association :category, collection: Category.order(:name), allow_blank: false
+      .field
+        = f.input :email, label: 'Contact email', input_html: { class: 'gtb_text_field' }
+      .field
+        = f.input :phone, label: 'Contact phone number', input_html: { class: 'gtb_text_field' }
+      .field
+        = f.input :contact_preference, collection: ['Email', 'Phone'], as: :select, allow_blank: false
+      .field
+        %p.ad_queries{style: 'padding-top: 40px;'}
+          For any general advertising enquiries please contact
+          = mail_to 'ads@guidetobe.co.uk', 'ads@guidetobe.co.uk', style: 'color: #E62B8A;'
+      .actions
+        = f.submit "Submit form", class: 'signup_button'
+
+
+
+.home_links.city_page
+  %a.claim_business_button{href: "/business_listings"} FREE business listing
+  - unless current_owner
+    = link_to 'Share your review', new_review_path, class: 'write_review_button'
+
+
+%script
+  $("#ad_request_category_id").kendoDropDownList();
+  $("#ad_request_contact_preference").kendoDropDownList();

@@ -1,0 +1,32 @@
+= filepicker_js_include_tag
+
+%nav.breadcrumbs
+  = link_to 'Brides', admin_brides_path
+  = link_to 'New Bride', new_admin_bride_path, class: 'current'
+
+.row
+  .columns.large-12
+    %h1 Add a new bride
+    %hr
+
+.row
+  .columns.large-6
+    = simple_form_for [:admin, @bride] do |f|
+      = f.input :name
+      = f.input :address
+      = f.input :region
+      = f.input :postcode
+      = f.input :email
+      = f.input :age
+      = f.input :source, as: :select, collection: HOW_HEAR, label: 'How did you hear about us?', allow_blank: false
+      = f.input :wedding_date
+      = f.input :wedding_place
+      = f.input :username
+      = f.input :password
+      = f.input :password_confirmation
+      = f.label :avatar, 'Bride avatar'
+      = f.filepicker_field :avatar
+      = f.label :terms, "Agree to terms and conditions"
+      .inline_checkbox_wrapper
+        = f.check_box :terms
+      = f.submit 'Add bride', class: 'button'

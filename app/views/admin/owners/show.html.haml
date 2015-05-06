@@ -1,0 +1,89 @@
+%nav.breadcrumbs
+  = link_to 'Owners', admin_owners_path
+  = link_to 'Owner', admin_owner_path(@owner), class: 'current'
+
+.row
+  .columns.large-12
+    %h1= @owner.name
+    .button-group
+      =link_to 'Edit', edit_admin_owner_path(@owner), class: 'tiny radius button'
+    %hr
+
+    %p
+      Username:
+      = @owner.username
+    %p
+      Email:
+      = mail_to @owner.email
+
+    %h5
+      Supplier Info
+      %small= @owner.supplier_name
+    %hr
+    = link_to 'View Supplier', admin_supplier_path(@owner.supplier), class: 'tiny button'
+
+    %h5 Subscription Info
+    %hr
+    %p
+      - if @owner.subscriptions.count > 0
+        %table
+          %thead
+            %tr
+              %th Id
+              %th Start date
+              %th End date
+              %th Product
+              %th Supplier
+          %tbody
+            = render @owner.subscriptions
+      - else
+        %p This owner does not have any subscriptions
+    %p
+      Source of owner:
+      = @owner.source
+      - if @owner.source == 'Other'
+        %p
+          Other source:
+          = @owner.source_other
+
+    - if @owner.sales.count > 0
+      - @owner.sales.each do |sale|
+        .row
+          .columns.large-6
+            %h6 Sale Details
+            %table
+              %thead
+                %tr
+                  %th Key
+                  %th Value
+              %tbody
+                - sale.attributes.sort.each do |key, value|
+                  %tr
+                    %td= key
+                    %td= value
+
+            = link_to 'View on Stripe', "https://manage.stripe.com/payments/#{sale.stripe_id}", class: 'small success button'
+          .columns.large-6
+            %h6 Paper Trail
+            %table
+              %thead
+                %tr
+                  %th Timestamp
+                  %th Event
+                  %th Changes
+              %tbody
+                - sale.versions.each do |version|
+                  %tr
+                    %td= version.created_at
+                    %td= version.event
+                    %td
+                      - version.changeset.sort.each do |key, value|
+                        %b= key
+                        = value[0]
+                        to
+                        = value[1]
+                        %br
+    - else
+      %p No sales
+
+

@@ -1,0 +1,21 @@
+.business_images
+  - if @supplier.image_one_url?
+    = link_to @supplier.image_one_url, rel: 'business_images_set' do
+      %p.business_image_overly_icon
+      = filepicker_image_tag @supplier.image_one_url, w: 150, h: 150, fit: 'crop', cache: true
+
+  - if @supplier.image_two_url?
+    = link_to @supplier.image_two_url, rel: 'business_images_set' do
+      %p.business_image_overly_icon
+      = filepicker_image_tag @supplier.image_two_url, w: 150, h: 150, fit: 'crop', cache: true
+
+  - if @supplier.image_three_url?
+    = link_to @supplier.image_three_url, rel: 'business_images_set' do
+      %p.business_image_overly_icon
+      = filepicker_image_tag @supplier.image_three_url, w: 150, h: 150, fit: 'crop', cache: true
+
+
+  - if @supplier.image_four_url?
+    = link_to @supplier.image_four_url, rel: 'business_images_set' do
+      %p.business_image_overly_icon
+      = filepicker_image_tag @supplier.image_four_url, w: 150, h: 150, fit: 'crop', cache: true

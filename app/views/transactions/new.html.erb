@@ -1,0 +1,105 @@
+<% content_for :head do %>
+  <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel=
+      "stylesheet">
+<% end %>
+
+<style>
+  a:hover {
+    text-decoration: none;
+  }
+</style>
+
+<div class="inner_page_text_based" id="payment_wrapper">
+
+  <% if @error %>
+    <%= @error %>
+  <% end %>
+
+  <h1 class="payment_selection">You are upgrading to the <span class=<%= @product.name %>><%= @product.name %></span> package</h1>
+
+  <%# if params[:query] == 'upgrade' %>
+  <p>I've changed my mind! Please <%= link_to 'keep me on my current package', owner_downgrade_path(current_owner) %></p>
+  <%# end %>
+
+  <p class="payment_stage">Complete your payment</p>
+
+  <div class="well" style="margin-left: 0px; position: relative; min-width: 650px; min-height: 180px;
+      max-height: 180px">
+    <%= form_tag @required_path, :class => '', :id => 'payment-form' do %>
+      <div class="row">
+        <div style="position: absolute; left: 20px">
+          <label class="control-label" for="email">Email</label>
+          <input type="email" name="email" id="email" placeholder="you@example.com" style="width: 25em"/>
+         </div>
+        <div style="position: absolute; left: 400px">
+          <label class="control-label" for="number">Card Number</label>
+          <input type="text" size="20" data-stripe="number" id="number" placeholder="**** **** **** ****"
+                 pattern="[\d ]*" style="width: 18em"/>
+        </div>
+      </div>
+      <div class="row" style="margin-top: 65px">
+        <div style="position: absolute; left: 20px">
+          <label class="control-label" for="cvc">CVC</label>
+          <input type="text" style="width: 3em" size="3" data-stripe="cvc" id="cvc" placeholder="***"
+                 pattern="\d*"/>
+          <img id="card-image" src="<%= image_path 'credit.png' %>" style="height: 30px; padding-left: 10px; margin-top:
+              -10px">
+        </div>
+        <div style="position: absolute; left: 150px">
+          <label class="control-label">Exp (MM/YYYY)</label>
+          <input style="width: 2em" type="text" size="2" id="exp-month" data-stripe="exp-month"
+                 placeholder="MM" pattern="\d*"/>
+          <span> / </span>
+          <input style="width: 3em" type="text" size="4" id="exp-year" data-stripe="exp-year" placeholder=
+              "YYYY" pattern="\d*"/>
+        </div>
+      </div>
+      <div class="row" style="margin-top: 70px">
+        <div class="price" style="position: absolute; left: 290px; top:114px;font-size: 23px; color: #eb0089;"><%= formatted_price(@cost)%></div>
+        <div style="position: absolute; left: 400px; top: 101px">
+          <button type="submit" class="btn-pink btn-large">Buy Now</button>
+          <img style="display: none;" src="<%= asset_path 'ajax-loader.gif' %>" id="spinner" style="margin-top: 20px;margin-left: -5px;">
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="row">
+    <div class="payment-errors" style="margin-left: 31px;font-size: 20px;color: #E62B8A;"></div>
+  </div>
+
+</div>
+
+<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+
+<script type="text/javascript">
+  $(function(){
+
+    function stripeResponseHandler(status, response) {
+      var form = $('#payment-form');
+      if (response.error) {
+        $('.payment-errors').text(response.error.message);
+        form.find('button').prop('disabled', false); }
+      else {
+        var token = response.id;
+        form.append($('<input type="hidden" name="stripeToken">').val(token));
+        form.get(0).submit();
+      }
+    }
+
+    Stripe.setPublishableKey('<%= Rails.configuration.stripe[:publishable_key] %>');
+
+    $('#payment-form').submit(function(event) {
+      var form = $(this);
+      form.find('button').prop('disabled', true);
+      $('#spinner').show();
+      Stripe.createToken(form, stripeResponseHandler);
+      return false;
+    });
+  });
+</script>
+
+<style>
+  <!--overide need as a:hover state from bootstrap is underlines -->
+  a:hover { text-decoration: none;}
+</style>

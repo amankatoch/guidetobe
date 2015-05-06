@@ -1,0 +1,4 @@
+.search_field
+  = form_tag search_suggestion_path(id: 1), method: :get, class: 'autocomplete_form' do
+    = text_field_tag :search, params[:search], class: 'header_search_field'
+    %button.header_search_button{type: "submit"}

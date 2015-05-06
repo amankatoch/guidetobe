@@ -1,0 +1,12 @@
+= filepicker_js_include_tag
+
+.nav.breadcrumbs
+  = link_to 'Supplier', [:admin, @supplier]
+  = link_to 'Edit Supplier', edit_admin_supplier_path(@supplier), class: 'current'
+
+.row
+  .columns.large-12
+    %h1 Edit Supplier
+    %hr
+
+= render partial: 'form'

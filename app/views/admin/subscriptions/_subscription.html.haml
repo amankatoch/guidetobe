@@ -1,0 +1,6 @@
+%tr
+  %td= subscription.id
+  %td= subscription.start_date
+  %td= subscription.end_date
+  %td= link_to subscription.product.name, admin_product_path(subscription.product)
+  %td= link_to subscription.owner.supplier.name, admin_supplier_path(subscription.owner.supplier)

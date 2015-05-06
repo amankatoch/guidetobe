@@ -1,0 +1,96 @@
+.review_post{id: "#{review.id}"}
+  / .likes_container
+  /   = "#{review.flaggings.count} " + "like".pluralize(review.flaggings.count)
+  /   = link_to 'Like', review_likes_path(review), method: :post, class: 'like_link'
+  .share{id: "review-#{review.id}", style: 'float: right'}
+  %p.review_post_title
+    %strong{style: 'padding-top:10px;'} Review:
+  %p= review.general_content
+  - if review.like_content?
+    %p.review_post_title
+      %strong= "One thing I loved"
+    %p= review.like_content
+  - if review.unlike_content?
+    %p.review_post_title
+      %strong= "Any tips?"
+    %p= review.unlike_content
+  .review_post_ratings
+    .review_post_ratings_inner_wrapper
+      .review_post_ratings_inner_title
+        %strong Service Rating
+      .review_post_rating_diamonds
+        .review_post_rating{class: review_rating_as_css(review.service)}
+    .review_post_ratings_inner_wrapper
+      .review_post_ratings_inner_title
+        %strong Value Rating
+      .review_post_rating_diamonds
+        .review_post_rating{class: review_rating_as_css(review.price)}
+    .review_post_ratings_inner_wrapper
+      .review_post_ratings_inner_title
+        %strong Overall Rating
+      .review_post_rating_diamonds
+        .review_post_rating{class: review_rating_as_css(review.overall)}
+
+  - if review.has_images?
+    .business_images.review_set
+      - if review.image_one_url?
+        = link_to review.image_one_url, rel: 'review_images_set' do
+          %p.business_image_overly_icon
+          = filepicker_image_tag review.image_one_url, w: 150, h: 150, fit: 'crop', cache: true
+
+      - if review.image_two_url?
+        = link_to review.image_two_url, rel: 'review_images_set' do
+          %p.business_image_overly_icon
+          = filepicker_image_tag review.image_two_url, w: 150, h: 150, fit: 'crop', cache: true
+
+      - if review.image_three_url?
+        = link_to review.image_three_url, rel: 'review_images_set' do
+          %p.business_image_overly_icon
+          = filepicker_image_tag review.image_three_url, w: 150, h: 150, fit: 'crop', cache: true
+          
+  
+
+  .review_author{style: 'vertical-align:top;'}
+    - if review.bride.has_avatar?
+      = filepicker_image_tag review.bride.avatar, w:50, h:50, fit: 'clip'
+      %p
+        = "Posted by"
+        =link_to review.author, bride_reviews_path(review.bride), style: 'color: #E62B8A; vertical-align:top;'
+        = "on #{review.created_at.strftime("#{review.created_at.day.ordinalize}" " %b %Y")}"
+        - if review.bride.wedding_date
+          %p
+            = "Wedding date: #{review.bride.wedding_date.to_time.strftime('%b %Y')}"
+    - else
+      = image_tag 'default_user_icon.jpg', height: 45, width: 45
+      %p
+        = "Posted by"
+        =link_to review.author, bride_reviews_path(review.bride), style: 'color: #E62B8A; vertical-align:top;'
+        = "on #{review.created_at.strftime("#{review.created_at.day.ordinalize}" " %b %Y")}"
+        - if review.bride.wedding_date
+          %p
+            = "Wedding date: #{review.bride.wedding_date.to_time.strftime('%b %Y')}"
+
+  -# reporting a review
+  = link_to 'Report this review', review_reports_path(review), method: :post, class: 'report_review_button', confirm: 'Are you sure you wish to report this review?!'
+
+  -# replying to a review
+  - if current_owner && current_owner.owns?(review.supplier)
+    - if review.no_reply? && current_owner.has_valid_subscription?
+      = link_to 'Respond to review', new_review_reply_path(review), class: 'write_review_button inline_owner_respond_button'
+    - elsif review.no_reply?
+      = link_to 'Respond to review', edit_owner_path(current_owner, query: 'review'), class: 'write_review_button inline_owner_respond_button', style: 'color: #E62B8A;'
+
+  -# showing a reply
+  - if review.has_reply? && review.first_reply.persisted?
+    .reply_wrapper
+      %p.reply_description{style: 'color: #E62B8A'}
+        = "Reply by"
+        = @supplier.name
+        = "(#{time_ago_in_words(review.first_reply.created_at)}"
+        ago)
+      .reply_content_wrapper
+        .reply_content
+          = simple_format(review.first_reply.body)
+
+%script
+  $("#review-#{review.id}").share({url: "#{supplier_url(review.supplier, anchor: review.id)}", text: 'Checkout my review on Guide To Be'});

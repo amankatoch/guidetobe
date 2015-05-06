@@ -1,0 +1,41 @@
+.left_column
+  .category_nav.hidden-xs
+    %p Other suppliers in the UK:
+    %ul
+      - @category_names.each do |category|
+        %li= link_to " ", category_path(category), class: category.name.downcase, title: category.name
+  .city_landing_page_title.visible-xs
+    %h4= category_introduction(@category, @suppliers.count("reviews"), @suppliers.count)
+
+  .city_landing_page_title.hidden-xs
+    %h4= category_introduction(@category, @suppliers.count("reviews"), @suppliers.count)
+
+  - total_suppliers = @suppliers.count       
+  - if @suppliers.count > 0
+    - @suppliers.each.with_index(1) do |supplier, index|
+      .city_results_block{style: 'opacity: 1; padding-bottom:30px;', id: "supplier_#{supplier.id}"}
+        .image_block
+          = link_to supplier_path(supplier) do
+            - if supplier.logo_url?
+              = image_tag supplier.logo_url, width: '160', height: '160'
+            - else
+              .supplier_placeholder{class: "#{supplier.category.name.downcase}"}
+        %div{:style=>"float: left;margin-left: 116px;"}      
+          %h2
+            = link_to supplier.name, supplier_path(supplier)
+          %p= link_to "#{supplier.region.name}", region_category_path(supplier.region, supplier.category)
+          %p= supplier.rank_list(index, total_suppliers) + ' in the UK'
+          - if supplier.rating && supplier.rating > 0
+            .diamond_rating_inline{ class: rating_as_css(supplier.rating.round) }
+          - else
+            %p No ratings yet
+          %p= "#{pluralize(supplier.reviews_count, 'review')}"
+  - else
+    = render partial: 'layouts/no_supplier_message'
+
+  .category_nav.visible-xs
+    %ul
+      - @category_names.each do |category|
+        %li= link_to " ", category_path(category), class: category.name.downcase, title: category.name
+          
+= render :partial => 'regions/right_buttons_and_ads'

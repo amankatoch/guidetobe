@@ -1,0 +1,17 @@
+# Guide To Be
+# The humans responsible & technology colophon
+
+# TEAM
+
+    Dr Ed Wallitt -- @podmedicsed
+    Jamie Peak -- @jpeak
+
+# THANKS
+
+    For all the support from Tessa and Eve
+
+# TECHNOLOGY COLOPHON
+
+    CSS3, HTML5
+    Ruby 2, Rails 4
+    Foundation 5 for admin frontend

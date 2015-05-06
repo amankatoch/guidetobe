@@ -1,0 +1,13 @@
+.inner_page_text_based
+  %h1 Thanks for purchasing a subscription
+  %p
+    Congratulations! Your business is now officially listed on Guide To Be and will appear in searches within one working day. We're delighted to have you on board.
+  %p
+    To make the most of your #{current_owner.product.name} listing features #{link_to 'edit your listing', edit_supplier_path(current_owner.supplier)}.
+
+    %p
+      You can
+      = link_to 'upgrade your business listing', edit_owner_path(current_owner)
+      or tell more Guide To Be-ers about your business by 
+      = link_to 'advertising on our site.', new_ad_request_path
+

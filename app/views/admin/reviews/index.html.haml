@@ -1,0 +1,26 @@
+%nav.breadcrumbs
+  = link_to 'Reviews', admin_reviews_path, class: 'current'
+
+%h1 Reviews
+= link_to 'View all', admin_reviews_path
+|
+= link_to 'View reported', admin_reviews_path(query: 'reported')
+
+%p Total number of reviews: #{@reviews.count}
+%hr
+
+.row
+  .columns.large-12
+    %table.reviews_table
+      %thead
+        %tr
+          %th{ width: 200 } Created at
+          %th{ width: 200 } Bride
+          %th{ width: 200 } Supplier
+          %th{ width: 200 } Overall Rating
+          %th Likes
+          %th
+          %th
+          %th
+          %th
+      = render @reviews

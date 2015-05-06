@@ -1,0 +1,16 @@
+= filepicker_js_include_tag
+= simple_form_for([:admin, @post]) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :title
+    = f.input :tag_list, label: 'Tags separated by commas'
+    = f.input :body
+    = f.input :image
+    = f.filepicker_field :image, onchange: 'onPhotoOneUpload(event)', button_class: 'upload_button', button_text: 'Add image', max_size: '819200'
+    = f.input :author
+    = f.input :published_on
+    = f.input :visible
+
+  .form-actions
+    = f.button :submit, class: 'button'

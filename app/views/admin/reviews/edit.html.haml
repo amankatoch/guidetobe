@@ -1,0 +1,32 @@
+= filepicker_js_include_tag
+%nav.breadcrumbs
+  = link_to 'Reviews', admin_reviews_path
+  = link_to 'Review', admin_review_path(@review)
+  = link_to 'Edit', '#', class: 'current'
+
+.row
+  .large-12.columns
+    %h1 Edit Review
+    %hr
+
+    = simple_form_for [:admin, @review] do |f|
+      = f.association :supplier, collection: Supplier.all.order(:name)
+      = f.association :bride
+      = f.input :general_content
+      = f.input :like_content
+      = f.input :unlike_content
+      = f.input :service
+      = f.input :price
+      = f.input :overall
+      = f.input :image_one_url
+      = f.filepicker_field :image_one_url, onchange: 'onPhotoOneUpload(event)', button_class: 'upload_button image_one_button',
+                                             button_text: 'Add image', max_size: '819200'
+      = f.input :image_two_url
+      = f.filepicker_field :image_two_url, onchange: 'onPhotoOneUpload(event)', button_class: 'upload_button image_one_button',
+                                             button_text: 'Add image', max_size: '819200'
+      = f.input :image_three_url
+      = f.filepicker_field :image_three_url, onchange: 'onPhotoOneUpload(event)', button_class: 'upload_button image_one_button',
+                                             button_text: 'Add image', max_size: '819200'
+                                
+      = f.input :hidden
+      = f.submit 'Update', class: 'button'

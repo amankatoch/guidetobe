@@ -1,0 +1,20 @@
+.new_city_request_container
+  %h1 Put your region on the map
+  %p
+    Guide To Be has not yet launched in your region. We want to help as many couples as we can so please fill in a few details below and we'll contact you when we reach your region.
+
+  %p{style: 'margin-top: 20px;'}
+    Boxes marked
+    %span.green_required *
+    must be filled in
+
+  .city_request_form
+    = simple_form_for @city_request do |f|
+      .field
+        = f.input :email, input_html: { class: 'gtb_text_field' }, label: 'Email'
+      .field
+        = f.input :region, input_html: { class: 'gtb_text_field' }
+      .field.city_request_date_field
+        = f.input :wedding_date, as: 'string', label: 'Wedding date'
+      .actions
+        = f.submit 'Submit city request', class: 'signup_button'

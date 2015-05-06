@@ -1,0 +1,24 @@
+%nav.top-bar{'data-topbar' => ''}
+  %ul.title-area
+    %li.name
+      %h1
+        = link_to 'GTB Admin', admin_dashboard_path
+  %section.top-bar-section
+    - if current_admin
+      %ul.right
+        %li.active
+          = link_to 'Logout', admin_session_path, method: :delete
+      %ul.left
+        %li= link_to 'Suppliers', admin_suppliers_path
+        %li= link_to 'Products', admin_products_path
+        %li= link_to 'Brides', admin_brides_path
+        %li= link_to 'Owners', admin_owners_path
+        %li= link_to 'Reviews', admin_reviews_path
+        %li= link_to 'Blog Posts', admin_posts_path
+        %li= link_to 'Advertisements', admin_advertisements_path
+        %li.has-dropdown
+          = link_to 'Prospectives', '#'
+          %ul.dropdown
+            %li= link_to 'City requests', admin_city_requests_path
+            %li= link_to 'Ad requests', admin_ad_requests_path
+        %li= link_to 'Competition', admin_competition_path

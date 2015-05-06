@@ -1,0 +1,9 @@
+= link_to supplier do
+  - if supplier.logo_url?
+    = image_tag supplier.logo_url, width: '92', height: '92'
+  - else
+    .supplier_placeholder.top_five{class: "#{supplier.category.name.downcase}"}
+  .top_five_ad_name
+    = supplier.name
+    %br
+    = supplier.region.name

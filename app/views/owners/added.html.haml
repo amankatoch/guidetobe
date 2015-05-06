@@ -1,0 +1,17 @@
+.inner_signup_complete_wrapper
+  .inner_page_text_based
+    %p
+      Congratulations! Your business is now officially listed on Guide To Be and will appear in searches within one working day.
+    %p
+      We're delighted to have you on board!
+    %p
+      To get started, 
+      = link_to 'view', supplier_path(current_owner.supplier)
+      or 
+      = link_to 'edit', edit_supplier_path(current_owner.supplier)
+      your business listing.
+
+.home_links.city_page
+  = link_to 'Upgrade your page', edit_owner_path(current_owner), class: 'claim_business_button'
+  = link_to 'Advertise with us', new_ad_request_path, class: 'write_review_button visible-all'
+  = link_to '', competition_path, class: 'competition_badge'

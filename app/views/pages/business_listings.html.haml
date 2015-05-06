@@ -1,0 +1,106 @@
+%h1.business_listings_page_single_header Create your business listing
+%p.business_listings_title Guide to Be has three business listing packages. Please select from the options below:
+
+/ .package_wrapper
+/   .package
+/     %ul.package_list{style: 'margin-top: 45px;'}
+/       %li Create business listing
+/       %li Upload your logo
+/       %li Add multiple contact details
+/       %li Appear in searches for your region and category
+/       %li Write business description
+/     %p.price Free
+/   .package.silver
+/     %p
+/       %span.small_premium_inline_icon
+/     %p.plusline{style: 'font-weight: bold; font-size: 18px;'}  +
+/     %ul.package_list{style:'color: #59595c;'}
+/       %li Respond to reviews
+/       %li Add social media links
+/       %li Upload images and video
+/       %li Create detailed listing
+/     %p.price £99 per year
+/   .package.gold
+/     %p
+/       %span.small_premium_inline_icon
+/     %p.plusline.gold_column_plus{style: 'font-weight: bold; font-size: 18px;'} +
+
+/     %p
+/       %span.small_premium_inline_icon.silver_wrapper
+/     %p.plusline.gold_column_plus{style: 'font-weight: bold; font-size: 18px;'} +
+
+/     %ul.package_list
+/       %li No competitor banner ads on your business page
+/     %p.price £149 per year
+
+/   .package_after_login.premium
+/     = link_to 'Sign up now', new_owner_path(query: 'Premium')
+/   .package_after_login#silver
+/     = link_to 'Sign up now', new_owner_path(query: 'Silver')
+/   .package_after_login#gold
+/     = link_to 'Sign up now', new_owner_path(query: 'Golden')
+
+
+.packages_wrapper
+  .packages.premium
+    .dmnd
+      = image_tag "premium.png"
+      %h1
+        PREMIUM
+        %span.left_shape
+        %span.right_shape
+    %ul.package_list{style: 'margin-top: 45px;'}
+      %li Create business listing
+      %li Upload your logo
+      %li Add multiple contact details
+      %li Appear in searches for your region and category
+      %li Write business description
+    %p.price Free
+    .package_after_login.premium
+      = link_to 'Sign up now', new_owner_path(query: 'Premium')
+  .packages.silver
+    .dmnd
+      = image_tag "silver.png"
+      %h1 
+        SILVER
+        %span.left_shape
+        %span.right_shape
+    %p
+      %span.small_premium_inline_icon
+    %p.plusline{style: 'font-weight: bold; font-size: 18px;'}  +
+    %ul.package_list{style:'color: #59595c;'}
+      %li Respond to reviews
+      %li Add social media links
+      %li Upload images and video
+      %li Create detailed listing
+    %p.price £99 per year
+    .package_after_login#silver
+      = link_to 'Sign up now', new_owner_path(query: 'Silver')
+    .overlay-mob
+      %h2 New Packages Coming Soon!
+   
+  .packages.gold
+    .dmnd
+      = image_tag "golden.png"
+      %h1 
+        GOLD
+        %span.left_shape
+        %span.right_shape
+    %p
+      %span.small_premium_inline_icon
+    %p.plusline.gold_column_plus{style: 'font-weight: bold; font-size: 18px;'} +
+
+    %p
+      %span.small_premium_inline_icon.silver_wrapper
+    %p.plusline.gold_column_plus{style: 'font-weight: bold; font-size: 18px;'} +
+
+    %ul.package_list
+      %li No competitor banner ads on your business page
+    %p.price £149 per year
+    .package_after_login#gold
+      = link_to 'Sign up now', new_owner_path(query: 'Golden')
+    .overlay-mob
+      %h2 New Packages Coming Soon!
+
+  .overlay-div
+    %h1 New Packages Coming Soon!

@@ -1,0 +1,11 @@
+= simple_form_for([:admin, object]) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :name
+    = f.input :description
+    = f.input :year_price
+    = f.input :package, as: :select, collection: PRODUCT_TYPES
+
+  .form-actions
+    = f.button :submit, class: 'button'

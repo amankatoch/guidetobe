@@ -1,0 +1,14 @@
+.inner_page_text_based
+  %p Thanks you for taking the time to repond to this review.
+  %p Please add your response here. The review is posted below for your reference as well.
+
+  .reply_form
+    = simple_form_for [@review, @reply] do |f|
+      .field.reply_field
+        = f.input :body, input_html: { class: 'gtb_text_area reply'}, required: false, label: false
+      .actions
+      = f.submit "Add reply", class: 'signup_button reply'
+
+  %hr
+  .review_container
+    = render @review

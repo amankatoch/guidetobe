@@ -1,0 +1,7 @@
+.home_links.city_page
+  -#= link_to 'FREE business listing', business_listings_path, class: 'claim_business_button'
+  = link_to 'Share your review', new_review_path, class: 'write_review_button'
+
+.contact_page_wrapper
+  %h1 Congratulations!
+  %p You've successfully joined Guide To Be! Start #{link_to 'edit your profile', owner_edit_profile_path} or #{link_to 'upgrade your subscription', upgrade_path}.

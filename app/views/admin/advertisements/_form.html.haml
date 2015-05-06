@@ -1,0 +1,17 @@
+= simple_form_for [:admin, @ad] do |f|
+  = f.input :contact_name
+  = f.input :contact_email
+  = f.association :region
+  = f.association :category
+  = f.input :start_date
+  = f.input :end_date
+  = f.input :ad_type, collection: AD_TYPES, as: :select
+  = f.input :active
+  - if @ad.image_url?
+    %h3 Current Image
+    = filepicker_image_tag @ad.image_url
+  = f.filepicker_field :image_url, onchange: 'onAdImageUpload(event)', button_class: 'small success button', button_text: 'Pick image'
+  .logo_block
+  %p Please ensure that the uploaded image matches the selected ad type (STANDARD - 275x115, LARGE - 275x235)
+  %br
+  = f.button :submit, class: 'button'

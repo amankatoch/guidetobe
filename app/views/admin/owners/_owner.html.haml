@@ -1,0 +1,14 @@
+%tr
+  %td= owner.created_at.to_s(:long)
+  %td= owner.first_name
+  %td= owner.last_name
+  %td= link_to owner.supplier_name, admin_supplier_path(owner.supplier)
+  %td= owner.plan
+  - if owner.has_logged_in?
+    %td= owner.last_login.to_s(:long)
+  - else
+    %td No login yet
+  %td= owner.review_count
+  %td= link_to 'Show', admin_owner_path(owner)
+  %td= link_to 'Edit', edit_admin_owner_path(owner)
+  %td= link_to 'Destroy', admin_owner_path(owner), method: :delete, data: { confirm: 'Are you sure? '}

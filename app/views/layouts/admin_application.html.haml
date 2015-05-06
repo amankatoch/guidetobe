@@ -1,0 +1,21 @@
+!!!
+%html
+  %head
+    %meta{:name => 'viewport', :content => 'width=device-width, initial-scale=1, maximum-scale=1'}
+    %title Guide To Be Admin
+    %link{rel: 'apple-touch-icon', href: image_url('iphone-icon.png') }
+    %link{rel: 'shortcut icon', href: image_url('favicon.ico'), type: 'image/vnd.microsoft.icon'}
+    %link{rel: 'icon', href: image_url('favicon.ico'), type: 'image/vnd.microsoft.icon' }
+    = stylesheet_link_tag :admin_application, :media => 'all'
+    = csrf_meta_tags
+  %body
+    = render 'layouts/admin_navigation'
+    %section{role: 'main'}
+      = render 'layouts/admin_messages'
+      .row.admin_container
+        .columns.large-12.medium-12
+          = yield
+    = javascript_include_tag :admin_application
+    = render 'layouts/bugherd'
+    - if Rails.env.production?
+      = render 'layouts/bugherd'

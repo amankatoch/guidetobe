@@ -1,0 +1,50 @@
+%nav.breadcrumbs
+  = link_to 'Brides', admin_brides_path, class: 'current'
+
+%h1 Brides
+%p Total number of brides: #{@brides.count}
+%hr
+
+= search_form_for @search, url: admin_brides_path do |f|
+  .row
+    .large-6.columns
+      .row
+        .small-10.columns
+          = f.text_field :email_cont, placeholder: 'Search by email...'
+        .small-2.columns
+          = f.submit 'Search', class: 'button postfix success round'
+  = link_to 'View all', admin_brides_path
+
+%hr
+
+= link_to 'Add a new bride', new_admin_bride_path, class: 'small button'
+
+%table.brides_table
+  %thead
+    %tr
+      %th= sort_link(@search, :name, 'Name')
+      %th= sort_link(@search, :username, 'Username')
+      %th Email
+      %th Region
+      %th Review count
+      %th Last logged in time
+      %th
+      %th
+      %th
+  %tbody
+    - @brides.each do |bride|
+      %tr
+        %td= bride.name
+        %td= bride.username
+        %td= bride.email
+        %td= bride.region
+        %td= bride.reviews.count
+        - if bride.has_logged_in?
+          %td= bride.last_login.to_s(:long)
+        - else
+          %td No login yet
+        %td= link_to 'Show', admin_bride_path(bride)
+        %td= link_to 'Edit', edit_admin_bride_path(bride)
+        %td= link_to 'Destroy', admin_bride_path(bride), :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br

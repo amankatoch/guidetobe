@@ -1,0 +1,58 @@
+%nav.breadcrumbs
+  = link_to 'Review', admin_reviews_path
+  = link_to 'Review', admin_review_path(@review), class: 'current'
+
+.row
+  .columns.large-12
+    %h1 Review
+    = hidden_label(@review)
+    = report_label(@review)
+    %a.button.right.small.dropdown{"data-dropdown" => "drop", :href => "#"} Actions
+    %br
+      %ul#drop.f-dropdown{"data-dropdown-content" => ""}
+        %li
+          = link_to 'Edit review', edit_admin_review_path(@review)
+        %li
+          = link_to 'Toggle visibility', toggle_visibility_admin_review_path(@review), data: { confirm: 'Are you sure?'}
+        %li
+          = link_to 'Delete review', admin_review_path(@review), method: :delete, data: {confirm: 'Are you sure?'}
+
+    %hr
+.row
+  .columns.large-6
+    %h5 The Review
+    %hr
+    %dl
+      %dt Bride
+      %dd= link_to @review.bride.name, admin_bride_path(@review.bride)
+      %dt Supplier
+      %dd= link_to @review.supplier.name, admin_supplier_path(@review.supplier)
+      %dt General Content
+      %dd= @review.general_content
+      %dt Things I liked
+      %dd= @review.like_content? ? @review.like_content : 'Not added'
+      %dt Thing I didn't like
+      %dd= @review.unlike_content? ? @review.unlike_content : 'Not added'
+      %dt Service
+      %dd= @review.service
+      %dt Price
+      %dd= @review.price
+      %dt Overall
+      %dd= @review.overall
+
+  .columns.large-6
+    %h5 Reports
+    %hr
+    - if @review.reports.count > 0
+      %table
+        %thead
+          %tr
+            %th Date
+            %th Reporter
+        %tbody
+          - @review.reports.each do |report|
+            %tr
+              %td= report.created_at
+              %td= report.reportable.name
+    - else
+      %p No reports for this review

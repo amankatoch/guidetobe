@@ -1,0 +1,53 @@
+.footer_links
+  %ul
+    %li.about_us_footer_column
+      %p.footer_column_title 
+        About us
+        %span.colaps_off +
+        %span.colaps_on - 
+      %ul
+        %li= link_to 'Our blog', posts_path
+        %li= link_to 'Who are we?', about_path
+        %li= link_to 'FAQs', faqs_path
+        %li= link_to 'Contact Us', new_contact_path
+        %li= link_to 'Competition', competition_path
+        %li= link_to 'Media', media_path
+        
+
+    %li.find_a_supplier_footer_column.cities_footer_column
+      %p.footer_column_title 
+        Regions
+        %span.colaps_off +
+        %span.colaps_on - 
+      %ul
+        - @region_names.each do |region|
+          %li= link_to region.name, region_path(region)
+
+
+    %li.find_a_supplier_footer_column
+      %p.footer_column_title 
+        Categories
+        %span.colaps_off +
+        %span.colaps_on - 
+      %ul
+        - @category_names.each do |category|
+          %li= link_to category.name, category_path(category)
+
+
+    %li.business_hub_footer_column
+      %p.footer_column_title 
+        Business hub
+        %span.colaps_off +
+        %span.colaps_on -   
+      %ul.about_dropdown_footer_column
+        %li= link_to 'Guide To Be for business', business_path
+        %li= link_to 'Create free listing', business_listings_path
+        %li= link_to 'Advertise', advertise_with_us_path
+   
+
+.copyright
+  Guide To Be Limited 2015. All rights reserved.
+  .policies
+    = link_to 'Privacy policy', privacy_path
+    = link_to 'Cookies policy', cookies_path
+    = link_to 'Terms and Conditions', terms_path

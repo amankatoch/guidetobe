@@ -1,0 +1,12 @@
+.inner_page_text_based{ :style => "padding-top: 20px;" }
+  %p.edit_supplier_header{ :style => "margin-bottom: 0;"} 
+    Thanks. Please confirm that you have changed your mind about upgrading to the 
+    - if @product
+      %span{class: "#{@product.name}"}= @product.name
+    - else
+      %span#package_name
+    package.
+
+  %p{ :style => "padding-top: 20px;"} Click the button below to confirm you do not want to upgrade.
+
+  = link_to 'No upgrade please', owner_downgrade_path(@owner), method: :post, data: { confirm: 'Last chance! Are you sure you want to keep the same package?' }, class: 'signup_button', style: 'color: white;'

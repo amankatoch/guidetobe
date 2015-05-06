@@ -1,0 +1,23 @@
+%h1 Listing posts
+
+= link_to 'New Post', new_admin_post_path, class: 'small radius button'
+
+%table.admin_posts_table
+  %tr
+    %th Published on
+    %th Title
+    %th Author
+    %th Visible
+    %th
+    %th
+    %th
+
+  - @posts.each do |post|
+    %tr
+      %td= post.published_on
+      %td= post.title
+      %td= post.author
+      %td= post.visible
+      %td= link_to 'Show', admin_post_path(post)
+      %td= link_to 'Edit', edit_admin_post_path(post)
+      %td= link_to 'Destroy', admin_post_path(post), :method => :delete, :data => { :confirm => 'Are you sure?' }

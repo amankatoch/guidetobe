@@ -1,0 +1,71 @@
+<div class="index_text_wrapper">
+  <div class="home_links mobil-setting visible-xs">
+    <% if current_owner %>
+      <% if current_owner.product.name=="Golden" %>
+        <%= link_to 'Edit my listing', edit_supplier_path(current_owner.supplier), class: 'edit_my_listing_button pink_button_update' %>
+      <% else %>
+        <%= link_to 'Edit my listing', edit_supplier_path(current_owner.supplier), class: 'edit_my_listing_button pink_button_update' %>
+        <%= link_to 'Upgrade my listing', edit_owner_path(current_owner), class: 'write_review_button user_upgrade_button' %>
+      <% end %>     
+    <% elsif  current_bride %>
+      <%= link_to 'Share your review', new_supplier_path, class: 'write_review_button' %>
+    <% else %>
+      <%#= link_to 'FREE business listing', business_listings_path, class: 'claim_business_button'%>
+      <%= link_to 'Share your review', new_supplier_path, class: 'write_review_button' %>
+    <% end %>  
+  </div>      
+  <h4> Welcome to Guide To Be, the first user review site for UK weddings. </h4>
+  <p class="homepage_text">
+    We make it easy for you to choose the best wedding dress shop, photographer, venue, and more, using honest reviews from real couples. Click on the map to see what couples in your region recommend, or use the box above to search for a specific company.
+  </p>  
+  <p class="homepage_text hidden-xs", style='color: #e62b8a;'>
+    Click on the map below to start.
+  </p>
+  <p class="homepage_text visible-xs", style='color: #e62b8a;'>
+    Double click on the map below to start.
+  </p>  
+  <%= render 'map' %>
+</div>
+
+
+<div class="home_links hidden-xs">
+  <% if current_owner %>
+    <% if current_owner.product.name=="Golden" %>
+      <%= link_to 'Edit my listing', edit_supplier_path(current_owner.supplier), class: 'edit_my_listing_button pink_button_update' %>
+    <% else %>
+      <%= link_to 'Edit my listing', edit_supplier_path(current_owner.supplier), class: 'edit_my_listing_button pink_button_update' %>
+      <%= link_to 'Upgrade my listing', edit_owner_path(current_owner), class: 'write_review_button user_upgrade_button' %>
+    <% end %>       
+  <% elsif current_bride %>
+    <%= link_to 'Share your review', new_supplier_path, class: 'write_review_button' %>
+  <% else %>
+    <%#= link_to 'FREE business listing', business_listings_path, class: 'claim_business_button' %>
+    <%= link_to 'Share your review', new_supplier_path, class: 'write_review_button' %>
+  <% end %>  
+
+ <!--  <div class="homepage_competition_badge"> -->
+  <%#= link_to '', competition_path, class: 'competition_badge' %>
+  <!-- </div> -->
+
+  <%= render 'reviews/recent_reviews' %>
+</div>
+
+
+<div class="index_media_wrapper hidden-xs">
+  <p style="padding-left:10px;"> As featured in: </p>
+  <%= image_tag 'homepagebanner.png', width: '100%', height: '75', :style => 'margin-left:0px' %>
+</div>
+
+
+<div class="index_text_wrapper" style="width:100%;">
+  <p class="hidden-xs"> Guide To Be is your ultimate wedding planning companion. Search for: </p>
+
+  <ul class="home_page_lower_list hidden-xs">
+    <% @category_names.each do |category| %>
+      <li>
+        <%= link_to category.name, category_path(category) %>
+      </li>
+    <% end %>    
+    <br/>
+  </ul>  
+</div>

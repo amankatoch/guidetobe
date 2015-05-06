@@ -1,0 +1,54 @@
+
+- unless @errors_array.blank?
+  %span.error
+    - @errors_array.each_pair do |key, message|
+      - message.each do |k, v|
+        = "Error in row#{key}: #{k} #{v.first}"
+        %br
+%nav.breadcrumbs
+  = link_to 'Suppliers', admin_suppliers_path, class: 'current'
+
+%h1 Suppliers
+%p Total number of suppliers: #{@suppliers.count}
+%hr
+
+= search_form_for @search, url: admin_suppliers_path do |f|
+  .row
+    .large-6.columns
+      .row
+        .small-10.columns
+          = f.text_field :name_cont, placeholder: 'Search by name...'
+        .small-2.columns
+          = f.submit 'Search', class: 'button postfix success round'
+  = link_to 'View all', admin_suppliers_path
+
+%hr
+.row
+  .small-3.columns
+    = link_to 'New Supplier', new_admin_supplier_path, class: 'button'
+  .small-9.columns  
+    = form_tag import_suppliers_admin_suppliers_path, multipart: true do
+      .row
+        .small-6.columns
+          .fileUpload{class: 'button'}
+            %span Upload File
+            = file_field_tag :file, :class => "upload", :id => "file-upload-btn"
+          %span{:id => "file-name"}    
+        .small-6.columns    
+          = submit_tag "Import Suppliers", class: 'button import-btn', :style => "display: none;"
+
+%table.suppliers_table
+  %thead
+    %tr
+      %th= sort_link(@search, :name, 'Name')
+      %th= sort_link(@search, :category, 'Category')
+      %th= sort_link(@search, :region, 'Region')
+      %th Review Count
+      %th Average rating
+      %th Claimed?
+      %th Owner
+      %th
+      %th
+      %th
+  %tbody
+    = render @suppliers

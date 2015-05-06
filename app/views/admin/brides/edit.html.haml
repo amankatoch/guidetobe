@@ -1,0 +1,28 @@
+%nav.breadcrumbs
+  = link_to 'Brides', admin_brides_path
+  = link_to 'Bride', admin_bride_path(@bride)
+  = link_to 'Edit', '#', class: 'current'
+
+.row
+  .columns.large-12
+    %h1 Edit Bride
+    %hr
+
+    = simple_form_for [:admin, @bride] do |f|
+      %h4 Basic Info
+      = f.input :name
+      = f.input :username
+      = f.input :password
+      = f.input :password_confirmation
+      = f.input :email
+      = f.input :address
+      = f.input :region
+      = f.input :postcode
+      = f.input :age
+      = f.input :source, as: :select, collection: HOW_HEAR
+      = f.input :source_other
+
+      %h4 Wedding
+      = f.input :wedding_date
+
+      = f.submit 'Update', class: 'button'

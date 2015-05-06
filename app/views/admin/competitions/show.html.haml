@@ -1,0 +1,33 @@
+%nav.breadcrumbs
+  = link_to 'Competition', admin_competition_path, class: 'current'
+
+%h1 Brides Eligible for Competition
+%hr
+
+%table.brides_table
+  %thead
+    %tr
+      %th id 
+      %th Name 
+      %th Username
+      %th Email
+      %th Region
+      %th Review count
+      %th Last logged in time
+      %th
+  %tbody
+    - @brides.each do |bride|
+      %tr
+        %td= bride.id
+        %td= bride.name
+        %td= bride.username
+        %td= bride.email
+        %td= bride.region
+        %td= bride.reviews.count
+        - if bride.has_logged_in?
+          %td= bride.last_login.to_s(:long)
+        - else
+          %td No login yet
+        %td= link_to 'Show', admin_bride_path(bride)
+%br
+

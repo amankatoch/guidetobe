@@ -1,0 +1,26 @@
+= filepicker_js_include_tag
+%p#notice= notice
+
+%p
+  %b Title:
+  = @post.title
+%p
+  %b Tags
+  = raw @post.tags.map(&:name)
+%p
+  %b Image:
+  = filepicker_image_tag @post.image, w: 208, h: 208, fit: 'clip'
+%p
+  %b Body:
+  = @post.body.html_safe
+%p
+  %b Author:
+  = @post.author
+%p
+  %b Published on:
+  = @post.published_on
+%p
+  %b Visible:
+  = @post.visible
+
+= link_to 'Edit', edit_admin_post_path(@post)

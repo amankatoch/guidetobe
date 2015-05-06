@@ -1,0 +1,19 @@
+!!!
+%html
+  %head
+    %meta{:name => 'viewport', :content => 'width=device-width, initial-scale=1, maximum-scale=1'}
+    %title= content_for?(:title) ? yield(:title) : 'Guide To Be'
+    %meta{:content => content_for?(:description) ? yield(:description) : "Guide To Be", :name => "description"}
+    %link{rel: 'apple-touch-icon', href: image_url('iphone-icon.png') }
+    %link{rel: 'shortcut icon', href: image_url('favicon.ico'), type: 'image/vnd.microsoft.icon'}
+    %link{rel: 'icon', href: image_url('favicon.ico'), type: 'image/vnd.microsoft.icon' }
+    = stylesheet_link_tag :holding_application, :media => 'all'
+    = javascript_include_tag :application
+    = csrf_meta_tags
+    = yield(:head)
+  %body
+    #container.container
+      %header
+      #main{:role => "main"}
+        = yield
+      %footer

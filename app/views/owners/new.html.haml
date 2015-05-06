@@ -1,0 +1,88 @@
+= filepicker_js_include_tag
+
+
+.inner_page_text_based.new_owner
+  %h1 Create your business listing
+  %p Fill in your business details below to join Guide To Be
+  %p
+    You have selected the
+    - if @product
+      %span#package_name{class: "#{@product.name}"}
+    - else
+      %span#package_name
+    package
+
+
+.write_review_title_wrapper
+  = simple_form_for @supplier, url: owners_path, method: :post do |f|
+    .set_form_wrapper
+      .field{style:'padding-bottom:40px;'}
+        %p.form_section_header Business details to appear in your listing
+        %p
+          Boxes marked
+          %span.green_required *
+          must be filled in
+      .field
+        %label{style: 'padding-right: 10px;'}
+          = "<span class='green_required'>*</span>Business name".html_safe
+        %input{id: 'supplier_name_autocomplete'}
+        = f.input :name, as: :hidden
+        .add_supplier_container{style: 'margin-left: 170px;'}
+          Your business has already been registered, if you think this is an error please #{link_to 'contact us', contact_path, style: 'color: #E62B8A;'}
+        .added_but_not_owned
+          Your business has been added by a bride. You are free to go ahead and register as the owner.
+      .field
+        = f.association :category, collection: Category.all.order(:name)
+      .field
+        = f.association :region, collection: Region.all.order(:name)
+
+      .field
+        %p
+          %br.visible-xs
+          %span.green_required *
+          Please enter at least the email address and website.
+      .field
+        = f.input :website, input_html: { class: 'gtb_text_field' }, label: 'Website'
+      .field
+        = f.input :phone, input_html: { class: 'gtb_text_field'}
+      .field
+        = f.input :email, input_html: { class: 'gtb_text_field' }, label: 'Business email'
+      .field
+        = f.label :logo_url, 'Your business logo'
+        = f.filepicker_field :logo_url, onchange: 'onLogoUpload(event)', button_class: 'upload_button', button_text: 'Upload logo', max_size: '819200'
+        .logo_block.owners_form_logo#logo
+        %p.upload_instructions (Please make sure the logo is square and a minimum size of 300px x 300px)
+
+
+      .field
+        %p.form_section_header Your Details
+
+      = f.simple_fields_for :owner do |owner_fields|
+        .field
+          = owner_fields.input :first_name, input_html: { class: 'gtb_text_field' }
+        .field
+          = owner_fields.input :last_name, input_html: { class: 'gtb_text_field' }
+        .field
+          = owner_fields.input :email, input_html: { class: 'gtb_text_field' }
+        .field
+          = owner_fields.input :username, input_html: { class: 'gtb_text_field' }
+        .field
+          = owner_fields.input :password, input_html: { class: 'gtb_text_field' }
+        .field
+          = owner_fields.input :password_confirmation, input_html: { class: 'gtb_text_field' }
+        .field{style: 'padding-bottom: 0px;'}
+          = owner_fields.input :source, as: :select, collection: OWNER_HEAR, label: 'How did you hear about us?', allow_blank: false
+        .field#other_source_field
+          = owner_fields.input :source_other, input_html: { class: 'gtb_text_field' }, label: 'If other please let us know where you heard about us'
+        .field
+          = owner_fields.association :product, prompt: 'Choose your package', label: 'Package'
+          %p
+            = link_to 'What are my options?', '#', id: 'package_reveal_link', style: 'color: #E62B8A', class: 'owners_new_page_reveal_link_placement'
+        .field.checkbox_owners_field{:style => "padding-bottom:0; margin-bottom: 0;"}
+          = owner_fields.input :terms, as: :boolean, boolean_style: :inline,
+                                label: "Agree to #{link_to 'supplier terms', supplier_terms_path, style: 'color: #E62B8A', target: '_blank'} and #{link_to 'privacy policy', privacy_path, style: 'color: #E62B8A', target: '_blank'}".html_safe,
+                                required: true
+      .actions
+        = f.submit 'Create business listing', class: 'signup_button business_listing_button', style: "margin-top: 0px;"
+
+= render 'package_model'

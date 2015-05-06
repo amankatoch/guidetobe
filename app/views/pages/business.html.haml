@@ -1,0 +1,64 @@
+.add_supplier_text_wrapper
+
+  .add_supplier_text
+    %h1{style: 'font-size: 25px;'} The Power of User Reviews
+    %p{style: 'font-weight: bold; font-size: 20px;'} Did you know?
+    %br
+    %p{style: 'color: #ec008c; font-size:20px; text-align: center;'} 61% of customers read online reviews before making a purchase decision 
+    %br
+    %p Brides-to-be are no different. That means word of mouth and positive user reviews are crucial tools for any wedding business.
+    %br
+    %p Whether it’s about photographers, wedding dresses, venues, entertainment or more, your potential clients are online looking for advice. And who better to ask than real-life newlyweds?
+    %br
+    %p That’s why Guide To Be is essential when it comes to growing your wedding business. We’re the UK’s first user review site for wedding suppliers and the only place where newlyweds can share reviews that soon-to-be-weds will read. 
+    %br
+    %p We house all your word-of-mouth recommendations, providing a unique platform to meet and interact with new customers. 
+    %br
+    %p The way your customers make decisions is changing. Don't get left behind – use Guide To Be to connect with your customers today. 
+    %br
+
+    %p{style: 'font-weight: bold; font-size: 20px;'} What makes Guide To Be unique?
+    %br
+
+  .badgesblock
+    .media.badge.independent
+      %a.media-item{:href => "#"}
+        = image_tag 'independent.png'
+      .media-body
+        %p
+          %strong Independent
+        %br
+        %p We’re the only independent user review site for wedding suppliers. Businesses can’t vet reviews on their listing – that’s why your customers trust us.
+        %br
+    .media.badge.flipped.verified
+      %a.media-item{:href => "#"}
+        = image_tag 'verified.png'
+      .media-body
+        %p
+          %strong Verified
+        %br
+        %p All reviews and reviewers are verified. Each user fills in their personal details and verifies their profile with a wedding date and a picture. The result is an authentic, trustworthy review system.
+        %br
+    .media.badge.interactive
+      %a.media-item{:href => "#"}
+        = image_tag 'interactive.png'
+      .media-body
+        %p
+          %strong Interactive
+        %br
+        %p Passive display advertising has limited impact. We provide a unique opportunity to actively engage with potential customers and showcase the great service at the heart of your business.
+    %br
+    %br
+    %p{style: 'clear:both;'} Research shows that consumers react worse to no reviews than to a bad review. In fact, a negative review gives you an opportunity to respond well and show potential customers that you truly care. There really is nothing to lose.
+    %br
+    %p User reviews should be at the heart of your business. So what are you waiting for? Future-proof your business today with Guide To Be. 
+
+    = link_to 'Get started here', business_listings_path, class: "get_started_button"
+    
+
+.home_links.city_page
+  = link_to 'FREE business listing', business_listings_path, class: "claim_business_button"
+
+  =# link_to 'Advertise', new_ad_request_path, class: "write_review_button visible-all"
+
+  =# link_to '', competition_path, class: 'competition_badge'

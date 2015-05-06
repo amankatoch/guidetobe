@@ -1,0 +1,174 @@
+= filepicker_js_include_tag
+
+.home_links.update_suplier.hidden-xs
+  - if current_owner
+    - if current_owner.product.name=="Silver"
+      = link_to 'Upgrade my listing', edit_owner_path(@supplier.owner), class: 'write_review_button user_upgrade_button'
+    - elsif current_owner.product.name=="Premium"
+      = link_to 'Upgrade my listing', edit_owner_path(@supplier.owner), class: 'write_review_button user_upgrade_button '
+    
+
+.add_supplier_text.supplier_txt
+  %p You can edit your personal information #{link_to 'here', owner_edit_profile_path(current_owner), style: 'color: #E62B8A'}
+  %br
+  %p Update your business listing information below
+
+  
+
+.add_supplier_form
+  = simple_form_for @supplier do |f|
+    %h5.edit_supplier_header{style: "padding-bottom:10px;"} 
+      Your
+      - if @product
+        %span{class: "#{@product.name}"}= @product.name
+      - else
+        %span#package_name
+      Listing
+    
+    %p{style: 'margin-top: 20px; margin-bottom: 40px;'}
+      Boxes marked
+      %span.green_required *
+      must be filled in
+
+    .form_field_wrapper
+      = f.input :name, input_html: { class: 'gtb_text_field' }
+    .form_field_wrapper
+      = f.label :category_id, '*Category', class: 'category_label_sup_form'
+      = f.collection_select(:category_id, Category.all, :id, :name, include_blank: false)
+    .form_field_wrapper
+      = f.label :region_id, '*Region', class: 'city_label_sup_form'
+      = f.collection_select(:region_id, Region.all, :id, :name, include_blank: false)
+    .form_field_wrapper
+      = f.label :description, 'Description'
+      = f.text_area :description, class: 'gtb_text_area animated'
+      .char_count_wrapper
+        You have
+        %span#charsLeft
+        characters left
+      - unless current_owner.paid_owner?
+        %p.field_upgrade_message Please #{link_to 'upgrade your package', edit_owner_path(@supplier.owner) } to add a longer description
+    .form_field_wrapper
+      = f.label :email, 'Contact email'
+      = f.text_field :email, class: 'gtb_text_field'
+    .form_field_wrapper
+      = f.label :phone, 'Contact phone'
+      = f.text_field :phone, class: 'gtb_text_field'
+    .form_field_wrapper
+      = f.label :address, 'Address'
+      = f.text_field :address, class: 'gtb_text_field'
+    .form_field_wrapper{style: 'padding-bottom: 40px;'}
+      = f.label :website, 'Website'
+      = f.text_field :website, class: 'gtb_text_field'
+    - if current_owner.paid_owner?
+      %h5.edit_supplier_header Social Media
+      .form_field_wrapper
+        = f.label :facebook_url, 'Facebook link'
+        = f.text_field :facebook_url, class: 'gtb_text_field'
+      .form_field_wrapper
+        = f.label :twitter_url, 'Twitter link'
+        = f.text_field :twitter_url, class: 'gtb_text_field'
+      .form_field_wrapper
+        = f.label :google_url, 'Google link'
+        = f.text_field :google_url, class: 'gtb_text_field'
+      .form_field_wrapper
+        = f.label :video_url, 'YouTube Link'
+        = f.text_field :video_url, class: 'gtb_text_field'
+    - else
+      %h5.edit_supplier_header Social Media
+      .form_field_wrapper
+        = f.label :facebook_url, 'Facebook link'
+        = f.text_field :facebook_url, class: 'gtb_text_field', disabled: true
+        = render 'field_upgrade_message'
+      .form_field_wrapper
+        = f.label :twitter_url, 'Twitter link'
+        = f.text_field :twitter_url, class: 'gtb_text_field', disabled: true
+        = render 'field_upgrade_message'
+      .form_field_wrapper
+        = f.label :google_url, 'Google+ link'
+        = f.text_field :google_url, class: 'gtb_text_field', disabled: true
+        = render 'field_upgrade_message'
+      .form_field_wrapper
+        = f.label :video_url, 'YouTube Video Link'
+        = f.text_field :video_url, class: 'gtb_text_field', disabled: true
+        = render 'field_upgrade_message'
+    -# %h5.edit_supplier_header Images
+    .field
+      = f.label :logo_url, 'Your business logo'
+      .upload-image-contaner-empty.business_logo_upload_wrapper
+        .logo_block.owners_form_logo#logo
+      = f.filepicker_field :logo_url, onchange: 'onLogoUpload(event)', button_class: 'upload_button business_logo_upload_button', button_text: 'Upload logo', max_size: '819200'
+      %p.upload_instructions (Please make sure the logo is square and a minimum size of 300px x 300px)
+    - if @supplier.owner.paid_owner?
+      %h3 Images
+      %p.upload_instructions Upload up to 4 photos for your listing (maximum size of 800kb per picture)
+      .field.image_field
+        - if @supplier.image_one_url?
+          = filepicker_image_tag @supplier.image_one_url, w: 100, h: 100, fit: 'clip'
+        - else
+          .upload-image-contaner-empty.one
+            .logo_block#one
+        = f.label :image_one_url, 'Image 1'
+        - if @supplier.image_one_url?
+          = f.filepicker_field :image_one_url, onchange: 'onPhotoOneUpload(event)', button_class: 'upload_button image_one_button',
+                                                       button_text: 'Change image', max_size: '819200'
+        - else
+          = f.filepicker_field :image_one_url, onchange: 'onPhotoOneUpload(event)', button_class: 'upload_button image_one_button',
+                                             button_text: 'Add image', max_size: '819200'
+
+      .field.image_field
+        - if @supplier.image_two_url?
+          = filepicker_image_tag @supplier.image_two_url, w: 100, h: 100, fit: 'clip'
+        - else
+          .upload-image-contaner-empty.two
+            .logo_block#two
+        = f.label :image_two_url, 'Image 2'
+        - if @supplier.image_two_url?
+          = f.filepicker_field :image_two_url, onchange: 'onPhotoTwoUpload(event)', button_class: 'upload_button image_two_button',
+                                             button_text: 'Change image', max_size: '819200'
+        - else
+          = f.filepicker_field :image_two_url, onchange: 'onPhotoTwoUpload(event)', button_class: 'upload_button image_two_button',
+                                             button_text: 'Add image', max_size: '819200'
+
+      .field.image_field
+        - if @supplier.image_three_url?
+          = filepicker_image_tag @supplier.image_three_url, w: 100, h: 100, fit: 'clip'
+        - else
+          .upload-image-contaner-empty.three
+            .logo_block#three
+        = f.label :image_three_url, 'Image 3'
+        - if @supplier.image_three_url?
+          = f.filepicker_field :image_three_url, onchange: 'onPhotoThreeUpload(event)', button_class: 'upload_button image_three_button',
+                                                       button_text: 'Change image', max_size: '819200'
+        - else
+          = f.filepicker_field :image_three_url, onchange: 'onPhotoThreeUpload(event)', button_class: 'upload_button image_three_button',
+                                               button_text: 'Add image', max_size: '819200'
+
+      .field.image_field
+        - if @supplier.image_four_url?
+          = filepicker_image_tag @supplier.image_four_url, w: 100, h: 100, fit: 'clip'
+        - else
+          .upload-image-contaner-empty.four
+          .logo_block#four
+        = f.label :image_four_url, 'Image 4'
+        - if @supplier.image_four_url?
+          = f.filepicker_field :image_four_url, onchange: 'onPhotoFourUpload(event)', button_class: 'upload_button image_four_button',
+                                              button_text: 'Change image', max_size: '819200'
+        - else
+          = f.filepicker_field :image_four_url, onchange: 'onPhotoFourUpload(event)', button_class: 'upload_button image_four_button',
+                                                button_text: 'Add image', max_size: '819200'
+
+    - else
+      %h3 Images
+      %p.upload_upgrade_instruction Please #{link_to 'upgrade your subscription', edit_owner_path(@supplier.owner)} to upload images
+
+
+    .form_field_wrapper
+      = f.submit 'Update business listing', class: 'standard_green_button edit_supplier_button'
+
+%script
+  $('#supplier_category_id').kendoDropDownList();
+  $('#supplier_region_id').kendoDropDownList();
+  - if current_owner.paid_owner?
+    $('#supplier_description').limit('300', '#charsLeft');
+  - else
+    $('#supplier_description').limit('140', '#charsLeft');

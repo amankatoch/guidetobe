@@ -1,0 +1,27 @@
+%div.right_column_reviews_widget
+
+  - if @recent_reviews.count > 0
+    %h3 Latest Reviews
+
+    - @recent_reviews.each do |review|
+      %div.right_column_reviews_widget_inner
+        %p.reviews_widget_title
+          = link_to review && review.supplier && review.supplier.name, supplier_path(review.supplier)
+        -#%p.reviews_widget_date
+          -# = "Shared #{time_ago_in_words(review.created_at)} ago"
+        %p
+          %span= link_to review && review.supplier && review.supplier.category && review.supplier.category.name, category_path(review.supplier.category || 1)
+          %span.right_column_reviews_widget_divide= "|"
+          %span= link_to review && review.supplier && review.supplier.region && review.supplier.region.name, region_path(review.supplier.region || 1)
+
+        %div.review_post_rating_diamonds
+          %div.reviews_widget_rating_label Service
+          %div.review_post_rating{class: review_rating_as_css(review.service)}
+
+        %div.review_post_rating_diamonds
+          %div.reviews_widget_rating_label Price
+          %div.review_post_rating{class: review_rating_as_css(review.price)}
+
+        %div.review_post_rating_diamonds
+          %div.reviews_widget_rating_label Overall
+          %div.review_post_rating{class: review_rating_as_css(review.overall)}

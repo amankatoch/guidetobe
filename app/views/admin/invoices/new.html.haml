@@ -1,0 +1,16 @@
+%h1 New Invoice
+
+%p For #{link_to 'the following advertisement', admin_advertisement_path(@ad)}
+%p Contact for ad #{mail_to @ad.contact_email}
+
+%hr
+
+.row
+  .large-6.columns
+    = simple_form_for [:admin, @ad, @invoice] do |f|
+      = f.input :date
+      = f.input :reference
+      = f.input :email, label: 'Invoice email'
+      = f.input :amount
+      = f.button :submit, class: 'button'
+      %p Please note that after this invoice is created it shall be emailed straight away for payment

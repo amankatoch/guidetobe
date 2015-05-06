@@ -1,0 +1,107 @@
+/ %ul.visible-xs.social-mobile
+/   %li.fb_link_wrapper= link_to '', 'http://www.facebook.com/guidetobe',:target=>'_blank', :class=>'fb_link'
+/   %li.twitter_link_wrapper= link_to '', 'http://www.twitter.com/guidetobe', :target=>'_blank', :class=>'twitter_link'
+.navigation_wrapper#myslidemenu
+  .menu-button 
+  = link_to '', root_path, class: 'logo'
+  .search-button#search-button
+  %ul.flexnav{"data-breakpoint" => "767"}
+    %li.sign_up_login_link_wrapper.home_nav_link= link_to 'Home', root_path
+   
+    %li.find_a_supplier
+      %a{href: '#'}Find a supplier
+      %ul.find_a_supplier_dropdown
+        %li.dropdown_city_link
+          %a{href: '#'} By Region
+          %ul.inner_navigation_dropdown.fixed_right_navigation_dropdown
+            - region_names.each do |region|
+              %li= link_to region.name, region_path(region)
+        %li.dropdown_category_link
+          %a{href: '#'} By Category
+          %ul.inner_navigation_dropdown.fixed_right_navigation_dropdown
+            - category_names.each do |category|
+              %li= link_to category.name, category_path(category)
+
+    - if current_bride
+      %li.sign_up_login_link_wrapper= link_to 'Log out', logout_path
+    - elsif current_owner
+      - if current_owner.product.name=="Golden"
+        %li.my_business
+          %a{href: '#'}My business listing
+          %ul.my_business_dropdown{style: "height: 144px;"}
+            %li= link_to 'View business listing', supplier_path(current_owner.supplier)
+            %li= link_to 'Edit business listing', edit_supplier_path(current_owner.supplier)
+            %li= link_to 'Advertise with us', new_ad_request_path
+    
+      - else 
+        %li.my_business
+          %a{href: '#'}My business listing
+          %ul.my_business_dropdown{style: "height: 185px;"}
+            %li= link_to 'View business listing', supplier_path(current_owner.supplier)
+            %li= link_to 'Edit business listing', edit_supplier_path(current_owner.supplier)
+            %li= link_to 'Upgrade listing', edit_owner_path(current_owner)
+            %li= link_to 'Advertise with us', new_ad_request_path
+
+    - else
+      %li.sign_up_login_link_wrapper= link_to 'Sign up', signup_path
+
+    %li.about_us
+      %a{href: '#'}About us
+      %ul.about_dropdown
+        %li= link_to 'Who are we?', about_path
+        %li= link_to 'FAQs', faqs_path
+        %li= link_to 'Contact us', new_contact_path
+        %li= link_to 'Competition', competition_path
+        %li= link_to 'Media', media_path
+
+
+    %li.sign_up_login_link_wrapper.home_nav_link
+      = link_to 'Our blog', posts_path
+
+   
+
+    %li.fb_link_wrapper.hidden-xs= link_to '', 'http://www.facebook.com/guidetobe',:target=>'_blank', :class=>'fb_link'
+    %li.twitter_link_wrapper.hidden-xs= link_to '', 'http://www.twitter.com/guidetobe', :target=>'_blank', :class=>'twitter_link'
+  = render 'layouts/search' 
+
+  
+  - if current_owner
+    - if current_owner.product.name=="Silver"
+      = link_to 'Upgrade my listing', edit_owner_path(current_owner), class: 'write_review_button user_upgrade_button'
+    - elsif current_owner.product.name=="Premium"
+      = link_to 'Upgrade my listing', edit_owner_path(current_owner), class: 'write_review_button user_upgrade_button'
+  - else
+    = link_to 'Share your review', new_supplier_path, class: 'write_review_button visible-xs'
+        
+
+  - if current_bride
+    .welcome_user_wrapper.top_zero
+      .top_line{style: 'line-height: 20px;'}
+        / - if current_bride.has_avatar?
+        /   = filepicker_image_tag current_bride.avatar, w: 45, h: 45, fit: 'clip'
+        / - else
+        /   = image_tag 'default_user_icon.jpg', height: 45, width: 45
+        .welcome 
+          =link_to 'Welcome ' + current_bride.username, bride_reviews_path(current_bride), style: 'color: #E62B8A;'
+          %p
+          =link_to 'Log out', logout_path, style: 'color: #E62B8A; font-weight: normal;'
+
+  - elsif current_owner
+    .welcome_user_wrapper.top_zero
+      .top_line{style: 'line-height: 20px;'}
+        - if current_owner.supplier.logo_url?
+          = filepicker_image_tag current_owner.supplier.logo_url, w: 45, h: 45, fit: 'clip'
+        - else 
+
+        .welcome
+          =link_to 'Welcome ' + current_owner.username, edit_supplier_path(current_owner.supplier), style: 'color: #E62B8A;'
+          %p
+          =link_to 'Log out', logout_path, style: 'color: #E62B8A; font-weight: normal;'
+
+  - else
+    .welcome_user_wrapper
+      .top_line{style: 'line-height: 20px;'}
+        .welcome 
+          %p
+          =link_to 'LOG IN', login_path, style: 'border-right:2px solid #E62B8A' ,class: 'login-link'
+          =link_to ' SIGN UP', signup_path,  class: 'login-link'

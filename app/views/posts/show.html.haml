@@ -1,0 +1,22 @@
+= filepicker_js_include_tag
+.post_container
+  .post_header
+    %h1{style:'color: #E62B8A; font-weight: bold;'}= @post.title
+    %p= "Written by #{@post.author}"
+    %p= "Published on #{@post.published_on.to_s(:long)}"
+
+  .post_body
+    = @post.body.html_safe
+    - if @post.image.present?
+      = filepicker_image_tag @post.image, w: 208, h: 208, fit: 'clip', rotate: "exif"
+
+  .tags_wrapper
+    %ul.tags
+      %li
+        = raw @post.tags.map(&:name).map { |t| link_to t, tag_path(t) }.join(' ')
+
+  .share_blog_post
+    .share{id: @post.id}
+
+%script
+  $('.share').share({url: "#{post_url(@post)}", text: "New blog post on Guide To Be - #{@post.title}"});

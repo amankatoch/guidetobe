@@ -1,0 +1,14 @@
+%tr
+  %td= supplier.name
+  %td= supplier.category_name
+  %td= supplier.region_name
+  %td= supplier.review_count
+  %td= supplier.average_overall_rating
+  %td= supplier_claimed_label(supplier.owned?)
+  - if supplier.owned?
+    %td= link_to supplier.owner.name, admin_owner_path(supplier.owner)
+  - else
+    %td
+  %td= link_to 'View', admin_supplier_path(supplier)
+  %td= link_to 'Edit', edit_admin_supplier_path(supplier)
+  %td= link_to 'Remove', admin_supplier_path(supplier), method: :delete, data: { confirm: 'Are you sure you wish to remove this supplier?'}

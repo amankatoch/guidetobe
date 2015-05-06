@@ -1,0 +1,108 @@
+@import "foundation";
+
+.admin_container {
+  margin-top: 20px;
+}
+
+.admin_login {
+  margin-top: 40px;
+}
+/* Products */
+
+.products_table {
+  width: 100%;
+}
+
+table.subscriptions_table {
+  width: 100%;
+}
+
+/* Suppliers */
+
+.suppliers_table {
+  margin-top: 30px;
+  width: 100%;
+}
+
+/* Owners */
+
+.owners_table {
+  margin-top: 30px;
+  width: 100%;
+}
+
+/* Brides */
+
+.brides_table {
+  width: 100%;
+}
+
+.bride_container {
+  padding-top: 40px;
+}
+
+.bride_vcard {
+  padding-top: 20px;
+}
+
+.bride_reviews {
+  padding-top: 20px;
+}
+
+// City requests
+
+.city_requests_table {
+  width: 100%;
+}
+
+// Ad requests
+
+.ad_requests_table {
+  width: 100%;
+}
+
+// Posts
+
+.admin_posts_table {
+  width: 100%;
+}
+
+// Advertisements
+
+.advertisements_table {
+  width: 100%;
+}
+
+.logo_block {
+  width: 275px;
+  height: 335px;
+  margin: 24px 0 0 167px;
+  display: none;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-color: #FFF;
+  background-size: cover;
+}
+
+
+.fileUpload {
+  position: relative;
+  overflow: hidden;
+}
+.fileUpload input.upload {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0;
+  padding: 0;
+  font-size: 20px;
+  cursor: pointer;
+  opacity: 0;
+  filter: alpha(opacity=0);
+  height: 51px;
+}
+#file-name {
+  position: absolute;
+  padding-left: 10px;
+  padding-top: 10px;
+}

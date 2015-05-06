@@ -1,0 +1,37 @@
+.left_column
+  .category_nav.hidden-xs
+    %p Other suppliers in #{@region.name}:
+    %ul
+      - @category_names.each do |category|
+        %li= link_to " ", region_category_path(@region, category), class: category.name.downcase, title: category.name
+  .city_landing_page_title
+    %h4= region_category_introduction(@region, @category, @review_count, @suppliers.count)
+        
+  - if @suppliers.count > 0
+    - @suppliers.each do |supplier|
+      .city_results_block{style: 'opacity: 1;', id: "supplier_#{supplier.id}"}
+        .image_block
+          = link_to supplier_path(supplier) do
+            - if supplier.logo_url?
+              = image_tag supplier.logo_url, width: '160', height: '160'
+            - else
+              .supplier_placeholder{class: "#{supplier.category.name.downcase}"}
+        %div{:style=>"float: left;margin-left: 116px;"}      
+          %h2
+            = link_to supplier.name, supplier_path(supplier)
+          %p= supplier.rank_as_text
+          - if supplier.rating && supplier.rating > 0
+            .diamond_rating_inline{ class: rating_as_css(supplier.rating.round) }
+          - else
+            %p No ratings yet
+          %p= "#{pluralize(supplier.review_count, 'review')}"
+  - else
+    = render partial: 'layouts/no_supplier_message'
+  
+  .category_nav.visible-xs
+    %ul
+
+      - @category_names.each do |category|
+        %li= link_to " ", region_category_path(@region, category), class: category.name.downcase, title: category.name  
+        
+= render 'ads/right_ad_column', region: @region

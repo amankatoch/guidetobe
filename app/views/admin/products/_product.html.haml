@@ -1,0 +1,9 @@
+%tr
+  %td= product.name
+  %td
+    - if product.free?
+      = product.owners.count
+    - else
+      = product.subscriptions.count
+  %td= link_to 'Show', admin_product_path(product)
+  %td= link_to 'Edit', edit_admin_product_path(product)

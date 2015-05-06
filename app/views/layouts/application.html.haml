@@ -1,0 +1,57 @@
+!!!
+%html
+  %head
+    %meta{:content => "width=device-width", :name => "viewport"}/
+    = display_meta_tags site: 'Guide To Be'
+    %link{rel: 'apple-touch-icon', href: image_url('iphone-icon.png') }
+    %link{rel: 'shortcut icon', href: image_url('favicon.ico'), type: 'image/vnd.microsoft.icon'}
+    %link{rel: 'icon', href: image_url('favicon.ico'), type: 'image/vnd.microsoft.icon' }
+    = stylesheet_link_tag :application, :media => 'all'
+    = javascript_include_tag :application
+    = analytics_init if Rails.env.production?
+    = csrf_meta_tags
+    = yield(:head)
+
+    - if controller_name == "brides" && action_name == "edit"
+      %meta{:content => "NOINDEX, NOFOLLOW", :name => "ROBOTS"}
+    - if controller_name == "reviews" && action_name == "index"
+      %meta{:content => "NOINDEX, NOFOLLOW", :name => "ROBOTS"}
+    - if controller_name == "posts" && action_name == "index"
+      %meta{:content => "NOINDEX, NOFOLLOW", :name => "ROBOTS"}
+
+  <!-- Remarketing Tag for Guide To Be -->
+  <script type="text/javascript">
+  /* <![CDATA[ */
+  var google_conversion_id = 979794730;
+  var google_custom_params = window.google_tag_params;
+  var google_remarketing_only = true;
+  /* ]]> */
+  </script>
+  <script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
+  </script>
+  <noscript>
+  <div style="display:inline;">
+  <img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/979794730/?value=0&amp;guid=ON&amp;script=0"/>
+  </div>
+  </noscript>
+  %body
+    .container_wrapper
+      #container.container
+        %header
+          .hidden-xs
+            = link_to '', root_path, class: 'logo'
+            = link_to 'Share your review', new_supplier_path, class: 'write_review_button visible-xs'
+            = render 'layouts/search'
+            = render 'layouts/navigation', region_names: @region_names, category_names: @category_names
+            = render 'layouts/messages'
+          .visible-xs
+            = render 'layouts/navigation_mobile', region_names: @region_names, category_names: @category_names
+
+            = render 'layouts/messages'
+        #main{:role => 'main'}
+          = yield
+        %footer
+          = render 'layouts/footer'
+    = render 'layouts/cookie_notifications'
+    = render 'layouts/bugherd'
+    = render 'layouts/mixpanel'

@@ -1,0 +1,14 @@
+.add_supplier_text_wrapper
+
+  .add_supplier_text
+    %h1 Advertise with us
+    %p We have made it easy for you to tell Guide To Be-ers about your business. Either create a #{link_to 'business listing', business_listings_path } on the site or #{link_to 'advertise', new_ad_request_path } with us using click-through banners.
+    %p
+      %br
+        For any general advertising enquiries please contact #{mail_to 'ads@guidetobe.co.uk'}
+
+.home_links.city_page
+  - if current_owner
+    = link_to 'Upgrade my listing', edit_owner_path(current_owner), class: "write_review_button user_upgrade_button"
+
+  = link_to 'Advertise', new_ad_request_path, class: "write_review_button"

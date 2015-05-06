@@ -1,0 +1,28 @@
+%nav.breadcrumbs
+  = link_to 'Owners', admin_owners_path
+  = link_to 'New Owner', new_admin_owner_path, class: 'current'
+
+.row
+  .columns.large-12
+    %h1 Add a new owner
+    %hr
+
+.row
+  .columns.large-6
+    = simple_form_for [:admin, @owner] do |f|
+      %h3 Basic information
+      = f.input :first_name
+      = f.input :last_name
+      = f.input :email
+      = f.input :username
+      = f.input :password
+      = f.input :password_confirmation
+      = f.input :source, as: :select, collection: OWNER_HEAR, label: 'How did you hear about us?', allow_blank: false
+      %h3 Supplier Information
+      = f.association :supplier, collection: Supplier.without_owner, hint: 'Only lists available suppliers (not registered already)'
+      %h3 Plan Package
+      = f.association :product, hint: 'Will autocreate a yearly subscription to this product'
+      = f.label :terms, "Agree to terms and conditions"
+      .inline_checkbox_wrapper
+        = f.check_box :terms
+      = f.submit 'Add bride', class: 'button'
